@@ -1,0 +1,1 @@
+BattleShip, made a school project by Rob and Stephan while in class / group: INF3J. The import from the school folder backup shows that the code was last modified on 10th of October 2006 before merging it to GitHub.
