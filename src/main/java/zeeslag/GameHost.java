@@ -100,7 +100,7 @@ public class GameHost extends Game {
 
   public void waitForOpponentToBeDone() {
     try {
-      while (!in.readLine().equals("klaar")) {
+      while (!in.readLine().equals("done")) {
       }
     } catch (IOException ex) {
       System.err.println(ex);

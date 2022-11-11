@@ -23,7 +23,7 @@ import javax.swing.JButton;
  */
 public class GameUI extends JFrame implements ActionListener {
 
-  public Game spel;
+  public Game game;
   public JTextField tf1;
   public JButton done;
   public JButton placeMinesweeper;
@@ -32,8 +32,8 @@ public class GameUI extends JFrame implements ActionListener {
   public SeaPanel opponent;
   public SeaPanel own;
 
-  /** Creates a new instance of SpelUI */
-  public GameUI(Game spel) {
+  /** Creates a new instance of GameUI */
+  public GameUI(Game game) {
     /** Define variables */
     JPanel northPanel = new JPanel(new BorderLayout());
     JPanel centerPanel = new JPanel(new BorderLayout());
@@ -43,14 +43,14 @@ public class GameUI extends JFrame implements ActionListener {
     placeMinesweeper = new JButton();
     placeFrigate = new JButton();
     placeAircraftCarrier = new JButton();
-    own = new SeaPanel(spel);
-    opponent = new SeaPanel(spel);
+    own = new SeaPanel(game);
+    opponent = new SeaPanel(game);
 
-    /** Define global variable: spel */
-    this.spel = spel;
+    /** Define global variable: game */
+    this.game = game;
 
     /** Config TextField: TF1 */
-    tf1.setText("Waiting for opponent. Port `1337` is made available for an incoming connection.");
+    tf1.setText("Waiting for an opponent. Port `1337` is made available for an incoming connection.");
     tf1.setEditable(false);
     tf1.setBackground(Color.WHITE);
 
@@ -112,13 +112,13 @@ public class GameUI extends JFrame implements ActionListener {
 
   public void actionPerformed(ActionEvent e) {
     if (e.getActionCommand() == "done") {
-      spel.doneButton();
+      game.doneButton();
     } else if (e.getActionCommand() == "placeMinesweeper") {
-      spel.createMinesweeper();
+      game.createMinesweeper();
     } else if (e.getActionCommand() == "placeFrigate") {
-      spel.createFrigate();
+      game.createFrigate();
     } else if (e.getActionCommand() == "placeAircraftCarrier") {
-      spel.createAircraftCarrier();
+      game.createAircraftCarrier();
     }
   }
 

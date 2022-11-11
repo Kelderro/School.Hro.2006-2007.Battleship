@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  */
 public class Main {
 
-  /** Creates a new instance of ZeeSlag */
+  /** Creates a new instance of Main */
   public static void main(String[] args) {
     if (JOptionPane.showConfirmDialog(null, "Do you want to be the server?") == 0) {
       new GameHost();

@@ -36,7 +36,7 @@ public class AircraftCarrier extends Boat {
 
   private boolean isPart(Square square) {
     /**
-     * Deze functie is speciaal gecodeerd door:
+     * This magnificent function has been coded by:
      * (0777974) - Rob op den Kelder
      * (0777556) - Stephan Klop
      * Westland corp.
@@ -53,9 +53,9 @@ public class AircraftCarrier extends Boat {
         sameRow = true;
       }
     }
-    System.out.println("\tNa " + count + " keuze(s) en een techniek hoogstandje is bepaald dat we "
-        + ((sameRow) ? "in dezelfde rij moeten blijven"
-            : (sameColumn) ? "in dezelfde kolom moeten blijven" : "overal heen mogen"));
+    System.out.println("\tAfter " + count + " decision(s) and same artificial intelligence we decided that we "
+        + ((sameRow) ? "need to stay in the same row"
+            : (sameColumn) ? "need to stay in the same column" : "can go everywhere"));
 
     if (lastSquare.column == square.column && ((lastSquare.row == square.row - 1 || lastSquare.row == square.row + 1)
         || (firstSquare.row == square.row - 1 || firstSquare.row == square.row + 1))) {
