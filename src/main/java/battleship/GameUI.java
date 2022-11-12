@@ -29,8 +29,8 @@ public class GameUI extends JFrame implements ActionListener {
   public JButton placeMinesweeper;
   public JButton placeFrigate;
   public JButton placeAircraftCarrier;
-  public SeaPanel opponent;
-  public SeaPanel own;
+  public Board opponent;
+  public Board own;
 
   /** Creates a new instance of GameUI */
   public GameUI(Game game) {
@@ -43,8 +43,8 @@ public class GameUI extends JFrame implements ActionListener {
     placeMinesweeper = new JButton();
     placeFrigate = new JButton();
     placeAircraftCarrier = new JButton();
-    own = new SeaPanel(game);
-    opponent = new SeaPanel(game);
+    own = new Board(game);
+    opponent = new Board(game);
 
     /** Define global variable: game */
     this.game = game;
