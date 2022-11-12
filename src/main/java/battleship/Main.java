@@ -4,7 +4,7 @@
  *
  */
 
-package zeeslag;
+package battleship;
 
 import javax.swing.JOptionPane;
 

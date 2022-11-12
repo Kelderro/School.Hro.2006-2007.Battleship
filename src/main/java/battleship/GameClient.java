@@ -4,7 +4,7 @@
  *
  */
 
-package zeeslag;
+package battleship;
 
 import java.io.BufferedReader;
 import java.io.IOException;

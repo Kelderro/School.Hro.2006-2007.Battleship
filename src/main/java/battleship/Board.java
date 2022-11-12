@@ -4,7 +4,7 @@
  *
  */
 
-package zeeslag;
+package battleship;
 
 import java.awt.Color;
 import java.awt.GridLayout;

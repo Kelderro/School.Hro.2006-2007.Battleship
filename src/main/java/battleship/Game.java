@@ -4,7 +4,7 @@
  *
  */
 
-package zeeslag;
+package battleship;
 
 import java.applet.Applet;
 import java.applet.AudioClip;
@@ -16,6 +16,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import javax.swing.Timer;
+
+import battleship.boats.AircraftCarrier;
+import battleship.boats.Frigate;
+import battleship.boats.Minesweeper;
+
 import java.net.Socket;
 import java.net.URL;
 import javax.swing.JOptionPane;

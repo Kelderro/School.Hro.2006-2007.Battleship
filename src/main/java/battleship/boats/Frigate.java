@@ -1,32 +1,36 @@
 /*
  *
- * Created on 10 oktober 2006, 10:15
+ * Created on 13 september 2006, 8:49
  *
  */
 
-package zeeslag;
+package battleship.boats;
+
+import battleship.Boat;
+import battleship.Square;
 
 /**
  *
- * @author Rob
+ * @author 0777974
  */
-public class AircraftCarrier extends Boat {
+public class Frigate extends Boat {
 
-  public AircraftCarrier() {
-    maxSquareCount = 5;
+  /** Creates a new instance of Fregat */
+  public Frigate() {
+    maxSquareCount = 3;
     squares = new Square[maxSquareCount];
   }
 
-  public boolean addSquare(Square square) {
-    System.out.println("Aircraft Carrier:\n\tNumber of squares placed: " + count + "\n\tTotal amount of squares:\t"
-        + squares.length);
-    if (square.getBoat() == null) {
+  public boolean addSquare(Square vak) {
+    System.out.println(
+        "Fregat:\n\tNumber of squares placed: " + count + "\n\tTotal amount of sqaures:\t" + squares.length);
+    if (vak.getBoat() == null) {
       if (count == 0) {
-        squares[count++] = square;
+        squares[count++] = vak;
         return true;
       } else {
-        if (isPart(square)) {
-          squares[count++] = square;
+        if (isPart(vak)) {
+          squares[count++] = vak;
           return true;
         }
       }
