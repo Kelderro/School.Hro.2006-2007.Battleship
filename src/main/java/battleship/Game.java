@@ -195,28 +195,30 @@ public abstract class Game extends Applet implements ActionListener {
       System.err.println(ex);
     }
     System.out.print("Incoming attempt [" + arrStrLine[1] + "," + arrStrLine[2] + "] is ");
-    int intCondition = checkPoging(Integer.parseInt(arrStrLine[1]), Integer.parseInt(arrStrLine[2]));
-    ui.own.setBoatButton(Integer.parseInt(arrStrLine[1]), Integer.parseInt(arrStrLine[2]), intCondition);
+    Condition condition = checkPoging(Integer.parseInt(arrStrLine[1]), Integer.parseInt(arrStrLine[2]));
+    ui.own.setBoatButton(Integer.parseInt(arrStrLine[1]), Integer.parseInt(arrStrLine[2]), condition);
 
-    switch (intCondition) {
-      case 1:
+    switch (condition) {
+      case SPLASH:
         clipSplash.play();
         break;
-      case 2:
+      case HIT:
         clipHit.play();
         break;
-      case 3:
+      case SUNK:
         clipSunk.play();
+        break;
+      default:
         break;
     }
 
-    String strCondition = Condition.values()[intCondition].toString();
+    String strCondition = condition.toString();
 
     out.println(strCondition);
     out.flush();
     System.out.println(strCondition);
 
-    if (intCondition == 4) {
+    if (condition == Condition.LOST) {
       JOptionPane.showMessageDialog(null, "Lost! WTF why!!");
       System.exit(0);
     }
