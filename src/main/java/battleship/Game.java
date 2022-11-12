@@ -22,7 +22,6 @@ import battleship.boats.Frigate;
 import battleship.boats.Minesweeper;
 
 import java.net.Socket;
-import java.net.URL;
 import javax.swing.JOptionPane;
 
 /**
