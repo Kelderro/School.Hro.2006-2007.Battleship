@@ -17,7 +17,7 @@ import java.awt.event.ActionListener;
  *
  * @author 0777974
  */
-public class SeaPanel extends JPanel implements ActionListener {
+public class Board extends JPanel implements ActionListener {
 
     private int size;
 
@@ -25,7 +25,7 @@ public class SeaPanel extends JPanel implements ActionListener {
     private JButton[][] buttons;
 
     /** Creates a new instance of SeaPanel */
-    public SeaPanel(Game game) {
+    public Board(Game game) {
         this.game = game;
         buttons = new JButton[16][16];
         setLayout(new GridLayout(16, 16, 5, 5));
