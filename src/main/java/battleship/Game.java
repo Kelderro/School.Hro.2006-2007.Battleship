@@ -31,10 +31,7 @@ import javax.swing.JOptionPane;
 public abstract class Game extends Applet implements ActionListener {
 
   protected boolean settingUp = false;
-  private boolean game = false;
-  private boolean bootmaken = false;
   protected boolean yourTurn = false;
-  private boolean gewonnen = false;
   public int width = 16;
   private int amountOfMinesweepers = 0;
   private int maxAmountOfMinesweepers = 3;
@@ -44,10 +41,6 @@ public abstract class Game extends Applet implements ActionListener {
   private int maxAmountOfAircraftCarriers = 1;
   private int maxAmountOfBoats = maxAmountOfMinesweepers + maxAmountOfFrigates + maxAmountOfAircraftCarriers;
   private int amountOfBoats = 0;
-  private static int SPLASH = 1;
-  private static int HIT = 2;
-  private static int SUNK = 3;
-  private static int LOST = 4;
 
   private Boat boat;
   private Boat[] boats;
@@ -128,17 +121,16 @@ public abstract class Game extends Applet implements ActionListener {
     if (settingUp) {
       if (boat.addSquare(vak)) {
         vak.setBoat(boat);
-        ui.own.setBoatButton(row, column, 0);
+        ui.own.setBoatButton(row, column, Condition.PLACINGBOAT);
         if (boat.complete()) {
           boats[amountOfBoats] = boat;
           amountOfBoats++;
           this.enableAvailableBoatButtons();
           System.out.println("\tBoatNumber[" + this.amountOfBoats
-              + "] is succesvol geplaatst.\n\tTotaal aantal boten nodig: " + this.maxAmountOfBoats);
+              + "] has been placed.\n\tTotal amount of boats: " + this.maxAmountOfBoats);
           if (this.maxAmountOfBoats == this.amountOfBoats) {
             System.out.println("\nDone with placing the boats!\n");
             settingUp = false;
-            game = true;
             ui.enableDoneButton(true);
           }
         }
@@ -154,36 +146,29 @@ public abstract class Game extends Applet implements ActionListener {
           strLine = in.readLine();
         }
 
-        int condition = 0;
-        if (strLine.equals("splash"))
-          condition = 1;
-        else if (strLine.equals("hit"))
-          condition = 2;
-        else if (strLine.equals("sunk"))
-          condition = 3;
-        else if (strLine.equals("lost"))
-          condition = 4;
-        else {
-          condition = 5;
-        }
+        Condition condition = Condition.valueOf(strLine);
 
         switch (condition) {
-          case 1:
+          case SPLASH:
             clipSplash.play();
             break;
-          case 2:
+          case HIT:
             clipHit.play();
             break;
-          case 3:
+          case SUNK:
             clipSunk.play();
+            break;
+          default:
             break;
         }
 
         System.out.println(strLine);
-        if (condition == 5) {
-          JOptionPane.showMessageDialog(null, "An error occured!\n\nI have no idea what this is:\n" + strLine);
-          System.exit(0);
-        } else if (condition == 4) {
+        // if (condition == 5) {
+        // JOptionPane.showMessageDialog(null, "An error occured!\n\nI have no idea what
+        // this is:\n" + strLine);
+        // System.exit(0);
+        // } else
+        if (condition == Condition.LOST) {
           JOptionPane.showMessageDialog(null, "You have won the game!\nWorship\n\nNow get a life!");
           System.exit(0);
         }
@@ -210,45 +195,30 @@ public abstract class Game extends Applet implements ActionListener {
       System.err.println(ex);
     }
     System.out.print("Incoming attempt [" + arrStrLine[1] + "," + arrStrLine[2] + "] is ");
-    int intCondition = checkPoging(Integer.parseInt(arrStrLine[1]), Integer.parseInt(arrStrLine[2]));
-    ui.own.setBoatButton(Integer.parseInt(arrStrLine[1]), Integer.parseInt(arrStrLine[2]), intCondition);
-    String strCondition = "";
+    Condition condition = checkPoging(Integer.parseInt(arrStrLine[1]), Integer.parseInt(arrStrLine[2]));
+    ui.own.setBoatButton(Integer.parseInt(arrStrLine[1]), Integer.parseInt(arrStrLine[2]), condition);
 
-    switch (intCondition) {
-      case 1:
+    switch (condition) {
+      case SPLASH:
         clipSplash.play();
         break;
-      case 2:
+      case HIT:
         clipHit.play();
         break;
-      case 3:
+      case SUNK:
         clipSunk.play();
+        break;
+      default:
         break;
     }
 
-    switch (intCondition) {
-      case 1:
-        strCondition = "splash";
-        break;
-      case 2:
-        strCondition = "hit";
-        break;
-      case 3:
-        strCondition = "sunk";
-        break;
-      case 4:
-        strCondition = "lost";
-        break;
-      default:
-        out.println("Cheating? The game will be closed.");
-        System.exit(0);
-    }
+    String strCondition = condition.toString();
 
     out.println(strCondition);
     out.flush();
     System.out.println(strCondition);
 
-    if (intCondition == 4) {
+    if (condition == Condition.LOST) {
       JOptionPane.showMessageDialog(null, "Lost! WTF why!!");
       System.exit(0);
     }
@@ -256,18 +226,18 @@ public abstract class Game extends Applet implements ActionListener {
     ui.setText("It's your turn!");
   }
 
-  public int checkPoging(int row, int column) {
+  public Condition checkPoging(int row, int column) {
     Square square = squares[row][column];
     Boat boat = square.getBoat();
-    int condition = 1;
+    Condition condition = Condition.SPLASH;
 
     if (boat != null) {
       square.setHit();
-      condition = 2;
+      condition = Condition.HIT;
       if (boat.checkSunk()) {
-        condition = 3;
+        condition = Condition.SUNK;
         if (checkLost()) {
-          condition = 4;
+          condition = Condition.LOST;
         }
       }
       ui.own.setBoatButton(row, column, condition);
