@@ -107,7 +107,7 @@ public class GameHost extends Game {
 
   public void doneButton() {
     ui.enableDoneButton(false);
-    out.println("klaar");
+    out.println("done");
     out.flush();
     clipStartGame.play();
     waitForTurn();

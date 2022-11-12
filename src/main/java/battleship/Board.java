@@ -19,7 +19,7 @@ import java.awt.event.ActionListener;
  */
 public class Board extends JPanel implements ActionListener {
 
-    private int size;
+    private int size = 16;
 
     private Game game;
     private JButton[][] buttons;
@@ -27,10 +27,10 @@ public class Board extends JPanel implements ActionListener {
     /** Creates a new instance of SeaPanel */
     public Board(Game game) {
         this.game = game;
-        buttons = new JButton[16][16];
-        setLayout(new GridLayout(16, 16, 5, 5));
-        for (int row = 0; row < 16; row++) {
-            for (int column = 0; column < 16; column++) {
+        buttons = new JButton[size][size];
+        setLayout(new GridLayout(size, size, 5, 5));
+        for (int row = 0; row < size; row++) {
+            for (int column = 0; column < size; column++) {
                 buttons[row][column] = new JButton();
                 buttons[row][column].setBackground(Color.CYAN);
                 add(buttons[row][column]);
@@ -40,22 +40,18 @@ public class Board extends JPanel implements ActionListener {
         }
     }
 
-    public void setBoatButton(int row, int column, int condition) {
+    public void setBoatButton(int row, int column, Condition condition) {
         switch (condition) {
-            case 0:
-                // Boot neerzetten
+            case PLACINGBOAT:
                 buttons[row][column].setBackground(Color.BLACK);
                 break;
-            case 1:
-                // Splash / missed
+            case SPLASH:
                 buttons[row][column].setBackground(Color.BLUE);
                 break;
-            case 2:
-                // Hit
+            case HIT:
                 buttons[row][column].setBackground(Color.ORANGE);
                 break;
-            case 3:
-                // Boot verloren
+            case SUNK:
                 buttons[row][column].setBackground(Color.RED);
                 break;
         }
