@@ -4,7 +4,7 @@
  *
  */
 
-package zeeslag;
+package battleship;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
