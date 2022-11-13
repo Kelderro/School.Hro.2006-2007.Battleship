@@ -14,9 +14,7 @@ import battleship.Square;
  * @author 0777974
  */
 public class Frigate extends Boat {
-
-  /** Creates a new instance of Fregat */
-  Frigate() {
+  public Frigate() {
     super(3, "Fregat");
   }
 }

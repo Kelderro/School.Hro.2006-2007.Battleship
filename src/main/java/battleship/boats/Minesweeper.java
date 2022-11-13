@@ -14,7 +14,7 @@ import battleship.Square;
  * @author 0777974
  */
 public class Minesweeper extends Boat {
-  Minesweeper() {
+  public Minesweeper() {
     super(2, "Minesweeper");
   }
 }
