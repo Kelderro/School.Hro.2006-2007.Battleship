@@ -21,6 +21,10 @@ public class AircraftCarrier extends Boat {
   }
 
   public boolean addSquare(Square square) {
+    if (square == null) {
+      return false;
+    }
+
     System.out.println("Aircraft Carrier:\n\tNumber of squares placed: " + count + "\n\tTotal amount of squares:\t"
         + squares.length);
     if (square.getBoat() == null) {
