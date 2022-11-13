@@ -14,7 +14,6 @@ import battleship.Square;
  * @author Rob
  */
 public class AircraftCarrier extends Boat {
-
   public AircraftCarrier() {
     super(5, "Aircraft Carrier");
   }
