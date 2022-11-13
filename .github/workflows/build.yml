@@ -29,8 +29,28 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+      - name: Set build version in maven (pom.xml)
+        run: mvn versions:set -DnewVersion=v0.0.${{ github.run_number }}.${{ github.run_attempt }}
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Kelderro_School.Hro.2006-2007.Battleship
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          tag_name: v0.0.${{ github.run_number }}.${{ github.run_attempt }}
+          release_name: Release
+            v0.0.${{ github.run_number }}.${{ github.run_attempt }}
+          body: New release triggered by commit ${{ github.sha }}
+          draft: false
+          prerelease: false
