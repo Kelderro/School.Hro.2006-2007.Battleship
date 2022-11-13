@@ -3,9 +3,9 @@ import org.junit.jupiter.api.Test;
 
 import battleship.Boat;
 
-public class BoatTest {
+class BoatTest {
   @Test
-  public void Constructor_MaxSquareCountZero_ThrowsException() {
+  void Constructor_MaxSquareCountZero_ThrowsException() {
     // Arrange
     assertThrows(IllegalArgumentException.class, () -> {
       new InvalidBoat(0, "UnitTest");
@@ -13,7 +13,7 @@ public class BoatTest {
   }
 
   @Test
-  public void Constructor_MaxSquareCountNegative_ThrowsException() {
+  void Constructor_MaxSquareCountNegative_ThrowsException() {
     // Arrange
     assertThrows(IllegalArgumentException.class, () -> {
       new InvalidBoat(-1, "UnitTest");
@@ -21,7 +21,7 @@ public class BoatTest {
   }
 
   @Test
-  public void Constructor_BoatNameEmpty_ThrowsException() {
+  void Constructor_BoatNameEmpty_ThrowsException() {
     // Arrange
     assertThrows(IllegalArgumentException.class, () -> {
       new InvalidBoat(1, "");
@@ -29,7 +29,7 @@ public class BoatTest {
   }
 
   @Test
-  public void Constructor_BoatNameNull_ThrowsException() {
+  void Constructor_BoatNameNull_ThrowsException() {
     // Arrange
     assertThrows(IllegalArgumentException.class, () -> {
       new InvalidBoat(1, null);
@@ -37,7 +37,7 @@ public class BoatTest {
   }
 
   @Test
-  public void Constructor_BoatNameWhiteSpacesOnly_ThrowsException() {
+  void Constructor_BoatNameWhiteSpacesOnly_ThrowsException() {
     // Arrange
     assertThrows(IllegalArgumentException.class, () -> {
       new InvalidBoat(1, "  ");

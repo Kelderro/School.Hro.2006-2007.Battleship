@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import battleship.Square;
 import battleship.boats.Minesweeper;
 
-public class SquareTest {
+class SquareTest {
   @Test
   void SetColumnViaConstructorReturnSameValueViaGet() {
     // Arrange
