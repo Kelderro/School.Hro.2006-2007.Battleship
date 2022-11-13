@@ -32,7 +32,7 @@ public abstract class Game extends Applet implements ActionListener {
 
   protected boolean settingUp = false;
   protected boolean yourTurn = false;
-  public int width = 16;
+  private int boardSize = 16;
   private int amountOfMinesweepers = 0;
   private int maxAmountOfMinesweepers = 3;
   private int amountOfFrigates = 0;
@@ -82,11 +82,11 @@ public abstract class Game extends Applet implements ActionListener {
     timer = new Timer(1000, this);
 
     /** Create a square array */
-    squares = new Square[16][16];
+    squares = new Square[this.boardSize][this.boardSize];
 
     /** Create the squares */
-    for (int row = 0; row < 16; row++) {
-      for (int column = 0; column < 16; column++) {
+    for (int row = 0; row < this.boardSize; row++) {
+      for (int column = 0; column < this.boardSize; column++) {
         squares[row][column] = new Square(row, column);
       }
     }
