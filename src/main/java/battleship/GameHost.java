@@ -76,10 +76,8 @@ public class GameHost extends Game {
   }
 
   public void waitForOpponent() {
-    /** Start up server */
-    try {
-      /** Een server socket maken */
-      ServerSocket serverSocket = new ServerSocket(1337);
+    int portNumber = 1337;
+    try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
 
       /** Luister naar een connectie aanvraag */
       socket = serverSocket.accept();
@@ -92,7 +90,10 @@ public class GameHost extends Game {
           socket.getOutputStream(), true);
 
     } catch (IOException ex) {
-      System.err.println(ex);
+      System.err.println(
+          "Exception occured while trying to open port " + portNumber +
+              "\nThe exception that is raised is:" +
+              "\n" + ex);
     }
   }
 
