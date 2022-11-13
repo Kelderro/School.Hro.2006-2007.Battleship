@@ -38,7 +38,7 @@ jobs:
       - name: Set build version in maven (pom.xml)
         run: mvn versions:set -DnewVersion=v0.0.${{ github.run_number }}.${{ github.run_attempt }}
       - name: Build and analyze
-        run: mvnw -B verify sonar:sonar -Dsonar.projectKey=Kelderro_School.Hro.2006-2007.Battleship -Dsonar.organization=kelderro-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
+        run: ./mvnw -B verify sonar:sonar -Dsonar.projectKey=Kelderro_School.Hro.2006-2007.Battleship -Dsonar.organization=kelderro-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
