@@ -7,7 +7,6 @@
 package battleship.boats;
 
 import battleship.Boat;
-import battleship.Square;
 
 /**
  *
