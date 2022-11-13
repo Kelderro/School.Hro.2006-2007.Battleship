@@ -20,6 +20,14 @@ public abstract class Boat {
   private Square[] squares;
 
   public Boat(int maxSquareCount, String boatName) {
+    if (maxSquareCount < 1) {
+      throw new IllegalArgumentException("maxSquareCount cannot zero or lower");
+    }
+
+    if (boatName == null || boatName.trim().isEmpty()) {
+      throw new IllegalArgumentException("boatName is null, empty or only contains whitespaces");
+    }
+
     this.maxSquareCount = maxSquareCount;
     this.squares = new Square[maxSquareCount];
     this.boatName = boatName;
