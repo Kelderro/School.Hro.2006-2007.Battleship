@@ -13,7 +13,9 @@ class AudioManagerTest {
 
   @BeforeEach
   void CreateAudioManager() {
-    assumeTrue(AudioSystem.getMixerInfo().length > 0);
+    // Only run audio manager tests if there are audio mixers
+    // for example on the build server these tests will fail
+    assumeFalse(AudioSystem.getMixerInfo().length == 0);
     this.audioManager = new AudioManager();
   }
 
