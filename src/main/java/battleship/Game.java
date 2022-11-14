@@ -7,14 +7,11 @@
 package battleship;
 
 import java.applet.Applet;
-import java.applet.AudioClip;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.MalformedURLException;
 import javax.swing.Timer;
 
 import battleship.boats.AircraftCarrier;
@@ -51,11 +48,7 @@ public abstract class Game extends Applet implements ActionListener {
   private Timer timer;
   protected Socket socket;
 
-  /** Alleen voor Stephan en Rob */
-  public AudioClip clipStartGame;
-  public AudioClip clipSplash;
-  public AudioClip clipHit;
-  public AudioClip clipSunk;
+  public AudioManager audioManager;
 
   /** Creates a new instance of Spel */
   public Game() {
@@ -64,19 +57,7 @@ public abstract class Game extends Applet implements ActionListener {
     ui = new GameUI(this);
 
     /** Load sound files */
-    File fileStartGame = new File("horn.wav");
-    File fileSplash = new File("plons.wav");
-    File fileHit = new File("explode.wav");
-    File fileSunk = new File("databan.wav");
-
-    try {
-      clipStartGame = Applet.newAudioClip(fileStartGame.toURL());
-      clipSplash = Applet.newAudioClip(fileSplash.toURL());
-      clipHit = Applet.newAudioClip(fileHit.toURL());
-      clipSunk = Applet.newAudioClip(fileSunk.toURL());
-    } catch (MalformedURLException e) {
-      System.out.println("Exception while loading / initializing the sound files");
-    }
+    this.audioManager = new AudioManager();
 
     /** Create a timer */
     timer = new Timer(1000, this);
@@ -148,19 +129,7 @@ public abstract class Game extends Applet implements ActionListener {
 
         Condition condition = Condition.valueOf(strLine);
 
-        switch (condition) {
-          case SPLASH:
-            clipSplash.play();
-            break;
-          case HIT:
-            clipHit.play();
-            break;
-          case SUNK:
-            clipSunk.play();
-            break;
-          default:
-            break;
-        }
+        PlayConditionAudio(condition);
 
         System.out.println(strLine);
         // if (condition == 5) {
@@ -195,22 +164,10 @@ public abstract class Game extends Applet implements ActionListener {
       System.err.println(ex);
     }
     System.out.print("Incoming attempt [" + arrStrLine[1] + "," + arrStrLine[2] + "] is ");
-    Condition condition = checkPoging(Integer.parseInt(arrStrLine[1]), Integer.parseInt(arrStrLine[2]));
+    Condition condition = checkAttempt(Integer.parseInt(arrStrLine[1]), Integer.parseInt(arrStrLine[2]));
     ui.own.setBoatButton(Integer.parseInt(arrStrLine[1]), Integer.parseInt(arrStrLine[2]), condition);
 
-    switch (condition) {
-      case SPLASH:
-        clipSplash.play();
-        break;
-      case HIT:
-        clipHit.play();
-        break;
-      case SUNK:
-        clipSunk.play();
-        break;
-      default:
-        break;
-    }
+    PlayConditionAudio(condition);
 
     String strCondition = condition.toString();
 
@@ -226,7 +183,23 @@ public abstract class Game extends Applet implements ActionListener {
     ui.setText("It's your turn!");
   }
 
-  public Condition checkPoging(int row, int column) {
+  private void PlayConditionAudio(Condition condition) {
+    switch (condition) {
+      case SPLASH:
+        audioManager.PlaySplash();
+        break;
+      case HIT:
+        audioManager.PlayHit();
+        break;
+      case SUNK:
+        audioManager.PlayBoatSunk();
+        break;
+      default:
+        break;
+    }
+  }
+
+  public Condition checkAttempt(int row, int column) {
     Square square = squares[row][column];
     Boat boat = square.getBoat();
     Condition condition = Condition.SPLASH;

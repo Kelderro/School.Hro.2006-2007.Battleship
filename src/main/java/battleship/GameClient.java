@@ -75,7 +75,7 @@ public class GameClient extends Game {
     waitForHostToBeReady();
     ui.setText("Setting up is done, the game will start!");
     System.out.println("Let's get ready to rumble!");
-    clipStartGame.play();
+    this.audioManager.PlayStart();
     yourTurn = true;
   }
 

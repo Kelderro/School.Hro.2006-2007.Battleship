@@ -110,7 +110,7 @@ public class GameHost extends Game {
     ui.enableDoneButton(false);
     out.println("done");
     out.flush();
-    clipStartGame.play();
+    this.audioManager.PlayStart();
     waitForTurn();
   }
 }
