@@ -31,6 +31,10 @@ public class Square {
         return boat;
     }
 
+    public boolean IsClaimed() {
+        return boat != null;
+    }
+
     public void setHit() {
         hit = true;
     }
