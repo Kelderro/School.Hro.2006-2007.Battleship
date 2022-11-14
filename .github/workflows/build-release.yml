@@ -32,12 +32,10 @@ jobs:
       - name: Set build version in maven (pom.xml)
         run: mvn versions:set -DnewVersion=v0.0.${{ github.run_number }}.${{ github.run_attempt }}
       - name: Build and analyze
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Kelderro_School.Hro.2006-2007.Battleship
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Kelderro_School.Hro.2006-2007.Battleship -Dgithub-jar-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      - name: Show dir
-        run: ls -al
       - name: Archive artifact
         uses: actions/upload-artifact@v3
         with:
@@ -71,6 +69,6 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./${{ github.sha }}.zip
-          asset_name: pxssyinferno.zip
-          asset_content_type: application/zip
+          asset_path: ./battleship-v0.0.${{ github.run_number }}.${{ github.run_attempt }}.jar
+          asset_name: battleship-v0.0.${{ github.run_number }}.${{ github.run_attempt }}.jar
+          asset_content_type: application/java-archive
