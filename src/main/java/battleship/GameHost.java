@@ -12,11 +12,16 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  *
  * @author 0777974
  */
 public class GameHost extends Game {
+
+  private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
   public static void main(String[] args) {
     new GameHost();
@@ -30,7 +35,7 @@ public class GameHost extends Game {
 
     waitForOpponent();
 
-    out.println("BattleShip for:\n" +
+    System.out.println("BattleShip for:\n" +
         "\n\r      ___           ___           ___           ___           ___" +
         "\n\r     /\\__\\         /\\  \\         /\\  \\         /\\  \\         /\\__\\" +
         "\n\r    /:/ _/_       /::\\  \\       /::\\  \\        \\:\\  \\       /:/  /" +
@@ -65,6 +70,8 @@ public class GameHost extends Game {
         "\n\r    \\::/  /   " +
         "\n\r     \\/__/    ");
 
+    System.out.flush();
+
     ui.setText("Found an opponent");
 
     waitForOpponentToBeDone();
@@ -90,10 +97,8 @@ public class GameHost extends Game {
           socket.getOutputStream(), true);
 
     } catch (IOException ex) {
-      System.err.println(
-          "Exception occured while trying to open port " + portNumber +
-              "\nThe exception that is raised is:" +
-              "\n" + ex);
+      this.logger.error(
+          "Exception occured while trying to open port " + portNumber, ex);
     }
   }
 
@@ -102,14 +107,13 @@ public class GameHost extends Game {
       while (!in.readLine().equals("done")) {
       }
     } catch (IOException ex) {
-      System.err.println(ex);
+      this.logger.error("Error occured", ex);
     }
   }
 
   public void doneButton() {
     ui.enableDoneButton(false);
-    out.println("done");
-    out.flush();
+    this.logger.debug("done");
     clipStartGame.play();
     waitForTurn();
   }
