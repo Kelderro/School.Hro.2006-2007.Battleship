@@ -40,6 +40,7 @@ public abstract class Game implements ActionListener {
   private int maxAmountOfAircraftCarriers = 1;
   private int maxAmountOfBoats = maxAmountOfMinesweepers + maxAmountOfFrigates + maxAmountOfAircraftCarriers;
   private int amountOfBoats = 0;
+  public final int portNumber = 1337;
 
   private Boat boat;
   private Boat[] boats;

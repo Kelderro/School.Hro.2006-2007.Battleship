@@ -24,37 +24,33 @@ public class GameClient extends Game {
 
   private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
-  public static void main(String[] args) {
-    new GameClient();
-  }
-
-  /** Creates a new instance of SpelClient */
   public GameClient() {
     super();
-    makeConnection();
+    establishConnection();
     enableAvailableBoatButtons();
   }
 
-  public void makeConnection() {
+  public void establishConnection() {
     ui.setTitle("Client - BattleShip");
 
     /** Startup client */
     try {
 
-      ui.setText("Connection via port number '1337'. IP address of the server is unknown.");
+      String message = String.format("Connection via port number '%s'. Waiting for IP address of the server.",
+          this.portNumber);
 
-      this.logger.info("Make a connection");
+      ui.setText(message);
 
-      /** IP aanvragen */
+      this.logger.info(message);
+
       String ipAddress = JOptionPane.showInputDialog(null, "Please, provide the IP address of the server", "IP address",
           JOptionPane.QUESTION_MESSAGE);
 
-      /** Een client socket maken */
-      socket = new Socket(ipAddress, 1337);
+      socket = new Socket(ipAddress, this.portNumber);
 
       this.logger.info("Connection established with the server");
 
-      ui.setText("Tegenstander gevonden, plaats de boten.");
+      ui.setText("Connection established, please place your boats.");
 
       /** Data input */
       in = new BufferedReader(new InputStreamReader(
@@ -64,7 +60,7 @@ public class GameClient extends Game {
       out = new PrintWriter(
           socket.getOutputStream(), true);
 
-      this.logger.info("Fully loaded");
+      this.logger.debug("Fully loaded");
 
       settingUp = true;
 

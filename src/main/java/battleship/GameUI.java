@@ -55,7 +55,9 @@ public class GameUI extends JFrame implements ActionListener {
     this.game = game;
 
     /** Config TextField: TF1 */
-    tf1.setText("Waiting for an opponent. Port `1337` is made available for an incoming connection.");
+    tf1.setText(String.format("Waiting for an opponent. Port `%s` is made available for an incoming connection.",
+        game.portNumber));
+
     tf1.setEditable(false);
     tf1.setBackground(Color.WHITE);
 
