@@ -7,7 +7,7 @@
 package battleship;
 
 import java.util.Arrays;
-import java.util.function.Function;
+import java.util.function.ToIntFunction;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,7 +66,7 @@ public abstract class Boat {
     this.logger.info("{}:\n\tNumber of squares placed: {}\n\tTotal amount of squares:\t{}", boatName, currentSize,
         squares.length);
 
-    if (claimSquare.IsClaimed()) {
+    if (claimSquare.isClaimed()) {
       this.logger.info(
           "Unable to place boat in square [{}] as it has been claimed. Player need to select another square.",
           claimSquare);
@@ -123,15 +123,11 @@ public abstract class Boat {
           horizontalBoat ? "horizontal" : "vertical", horizontalBoat ? "row" : "column");
     }
 
-    if (verticalBoat && isLinked(square, p -> p.row)) {
+    if (verticalBoat && Boolean.TRUE.equals(isLinked(square, p -> p.row))) {
       return true;
     }
 
-    if (horizontalBoat && isLinked(square, p -> p.column)) {
-      return true;
-    }
-
-    return false;
+    return horizontalBoat && Boolean.TRUE.equals(isLinked(square, p -> p.column));
   }
 
   /**
@@ -145,7 +141,7 @@ public abstract class Boat {
    * @return true, the square is correctly placed relative to the already placed
    *         squares for the boat. false, otherwise.
    */
-  private Boolean isLinked(Square square, Function<Square, Integer> relevantProperty) {
+  private Boolean isLinked(Square square, ToIntFunction<Square> relevantProperty) {
     // Sort the squares to be certain the first square of the boat is at position 0
     // of the array and the last square of the boat at the end of the array.
     // Depending on how the boat is placed we need to sort by column or by row
@@ -156,10 +152,10 @@ public abstract class Boat {
       } else if (obj2 == null) {
         return -1;
       }
-      return Integer.compare(relevantProperty.apply(obj1), relevantProperty.apply(obj2));
+      return Integer.compare(relevantProperty.applyAsInt(obj1), relevantProperty.applyAsInt(obj2));
     });
 
-    return relevantProperty.apply(square) == relevantProperty.apply(squares[0]) - 1
-        || relevantProperty.apply(square) == relevantProperty.apply(squares[currentSize - 1]) + 1;
+    return relevantProperty.applyAsInt(square) == relevantProperty.applyAsInt(squares[0]) - 1
+        || relevantProperty.applyAsInt(square) == relevantProperty.applyAsInt(squares[currentSize - 1]) + 1;
   }
 }

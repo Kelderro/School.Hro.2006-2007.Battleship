@@ -31,7 +31,7 @@ public class Square {
         return boat;
     }
 
-    public boolean IsClaimed() {
+    public boolean isClaimed() {
         return boat != null;
     }
 
