@@ -12,10 +12,10 @@ class SquareTest {
     int column = (int) (Math.random() * (1000 - 0 + 1) + 0);
 
     // Act
-    Square square = new Square(0, column);
+    UnitTestSquare square = new UnitTestSquare(0, column);
 
     // Assert
-    assertEquals(column, square.column);
+    assertEquals(column, square.GetColumn());
   }
 
   @Test
@@ -24,10 +24,10 @@ class SquareTest {
     int row = (int) (Math.random() * (1000 - 0 + 1) + 0);
 
     // Act
-    Square square = new Square(row, 0);
+    UnitTestSquare square = new UnitTestSquare(row, 0);
 
     // Assert
-    assertEquals(row, square.row);
+    assertEquals(row, square.GetRow());
   }
 
   @Test
@@ -75,5 +75,19 @@ class SquareTest {
 
     // Assert
     assertEquals(true, square.getHit());
+  }
+
+  private class UnitTestSquare extends Square {
+    public UnitTestSquare(int row, int column) {
+      super(row, column);
+    }
+
+    public int GetRow() {
+      return this.row;
+    }
+
+    public int GetColumn() {
+      return this.column;
+    }
   }
 }

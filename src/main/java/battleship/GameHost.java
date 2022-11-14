@@ -104,7 +104,9 @@ public class GameHost extends Game {
 
   public void waitForOpponentToBeDone() {
     try {
-      while (!in.readLine().equals("done")) {
+      String incomingMessage = "";
+      while (!incomingMessage.equalsIgnoreCase("done")) {
+        incomingMessage = in.readLine();
       }
     } catch (IOException ex) {
       this.logger.error("Error occured", ex);

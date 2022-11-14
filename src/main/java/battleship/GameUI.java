@@ -102,21 +102,22 @@ public class GameUI extends JFrame implements ActionListener {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     /** Default: disable button in the southPanel **/
-    enablePlaceMinesweeper(false);
     enableDoneButton(false);
+    enablePlaceMinesweeper(false);
     enablePlaceFrigate(false);
     enablePlaceAircraftCarrier(false);
   }
 
   public void actionPerformed(ActionEvent e) {
-    if (e.getActionCommand() == "done") {
-      game.doneButton();
-    } else if (e.getActionCommand() == "placeMinesweeper") {
-      game.createMinesweeper();
-    } else if (e.getActionCommand() == "placeFrigate") {
-      game.createFrigate();
-    } else if (e.getActionCommand() == "placeAircraftCarrier") {
-      game.createAircraftCarrier();
+    switch (e.getActionCommand()) {
+      case "done":
+        game.doneButton();
+      case "placeMinesweeper":
+        game.createMinesweeper();
+      case "placeFrigate":
+        game.createFrigate();
+      case "placeAircraftCarrier":
+        game.createAircraftCarrier();
     }
   }
 
@@ -124,12 +125,12 @@ public class GameUI extends JFrame implements ActionListener {
     tf1.setText(text);
   }
 
-  public void enablePlaceMinesweeper(boolean value) {
-    placeMinesweeper.setEnabled(value);
-  }
-
   public void enableDoneButton(boolean value) {
     done.setEnabled(value);
+  }
+
+  public void enablePlaceMinesweeper(boolean value) {
+    placeMinesweeper.setEnabled(value);
   }
 
   public void enablePlaceAircraftCarrier(boolean value) {

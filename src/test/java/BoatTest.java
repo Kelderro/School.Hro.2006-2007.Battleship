@@ -8,7 +8,7 @@ class BoatTest {
   void Constructor_MaxSquareCountZero_ThrowsException() {
     // Arrange
     assertThrows(IllegalArgumentException.class, () -> {
-      new InvalidBoat(0, "UnitTest");
+      new UnitTestBoat(0, "UnitTest");
     });
   }
 
@@ -16,7 +16,7 @@ class BoatTest {
   void Constructor_MaxSquareCountNegative_ThrowsException() {
     // Arrange
     assertThrows(IllegalArgumentException.class, () -> {
-      new InvalidBoat(-1, "UnitTest");
+      new UnitTestBoat(-1, "UnitTest");
     });
   }
 
@@ -24,7 +24,7 @@ class BoatTest {
   void Constructor_BoatNameEmpty_ThrowsException() {
     // Arrange
     assertThrows(IllegalArgumentException.class, () -> {
-      new InvalidBoat(1, "");
+      new UnitTestBoat(1, "");
     });
   }
 
@@ -32,7 +32,7 @@ class BoatTest {
   void Constructor_BoatNameNull_ThrowsException() {
     // Arrange
     assertThrows(IllegalArgumentException.class, () -> {
-      new InvalidBoat(1, null);
+      new UnitTestBoat(1, null);
     });
   }
 
@@ -40,12 +40,12 @@ class BoatTest {
   void Constructor_BoatNameWhiteSpacesOnly_ThrowsException() {
     // Arrange
     assertThrows(IllegalArgumentException.class, () -> {
-      new InvalidBoat(1, "  ");
+      new UnitTestBoat(1, "  ");
     });
   }
 
-  private class InvalidBoat extends Boat {
-    public InvalidBoat(int maxSquareCount, String boatName) {
+  private class UnitTestBoat extends Boat {
+    public UnitTestBoat(int maxSquareCount, String boatName) {
       super(maxSquareCount, boatName);
     }
   }

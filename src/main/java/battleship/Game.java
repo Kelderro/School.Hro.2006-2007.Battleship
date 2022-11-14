@@ -54,10 +54,8 @@ public abstract class Game implements ActionListener {
 
   private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
-  /** Creates a new instance of Spel */
-  public Game() {
+  protected Game() {
 
-    /** Create a new spelUI */
     ui = new GameUI(this);
 
     /** Load sound files */
@@ -100,27 +98,42 @@ public abstract class Game implements ActionListener {
     this.disableAllBoatButtons();
   }
 
-  public void boardButton(int row, int column) {
-    Square vak = squares[row][column];
+  public void settingUp(int row, int column) {
+    Square square = squares[row][column];
 
+    if (!boat.addSquare(square)) {
+      return;
+    }
+
+    square.setBoat(boat);
+    ui.own.setBoatButton(square.row, square.column, Condition.PLACINGBOAT);
+
+    if (!boat.complete()) {
+      return;
+    }
+
+    boats[amountOfBoats] = boat;
+    amountOfBoats++;
+    this.enableAvailableBoatButtons();
+    this.logger.info("\tBoatNumber[{}] has been placed." +
+        "\n\tTotal amount of boats: {}", this.amountOfBoats, this.maxAmountOfBoats);
+
+    if (this.maxAmountOfBoats != this.amountOfBoats) {
+      return;
+    }
+
+    this.logger.info("Done with placing the boats!");
+    settingUp = false;
+    ui.enableDoneButton(true);
+  }
+
+  public void boardButton(int row, int column) {
     if (settingUp) {
-      if (boat.addSquare(vak)) {
-        vak.setBoat(boat);
-        ui.own.setBoatButton(row, column, Condition.PLACINGBOAT);
-        if (boat.complete()) {
-          boats[amountOfBoats] = boat;
-          amountOfBoats++;
-          this.enableAvailableBoatButtons();
-          this.logger.info("\tBoatNumber[{}] has been placed." +
-              "\n\tTotal amount of boats: {}", this.amountOfBoats, this.maxAmountOfBoats);
-          if (this.maxAmountOfBoats == this.amountOfBoats) {
-            this.logger.info("Done with placing the boats!");
-            settingUp = false;
-            ui.enableDoneButton(true);
-          }
-        }
-      }
-    } else if (yourTurn) {
+      settingUp(row, column);
+      return;
+    }
+
+    if (yourTurn) {
       yourTurn = false;
       this.logger.info("Attempt [{},{}] was ", row, column);
 
@@ -156,13 +169,14 @@ public abstract class Game implements ActionListener {
       arrStrLine[1] = "";
       arrStrLine[2] = "";
 
-      while (!arrStrLine[0].equals("attempt")) {
+      while (!arrStrLine[0].equalsIgnoreCase("attempt")) {
         arrStrLine = in.readLine().split(",");
       }
     } catch (IOException ex) {
       this.logger.error("Error occured", ex);
     }
-    System.out.print("Incoming attempt [" + arrStrLine[1] + "," + arrStrLine[2] + "] is ");
+    this.logger.info("Incoming attempt [{},{}] is ", arrStrLine[1], arrStrLine[2]);
+
     Condition condition = checkAttempt(Integer.parseInt(arrStrLine[1]), Integer.parseInt(arrStrLine[2]));
     ui.own.setBoatButton(Integer.parseInt(arrStrLine[1]), Integer.parseInt(arrStrLine[2]), condition);
 
