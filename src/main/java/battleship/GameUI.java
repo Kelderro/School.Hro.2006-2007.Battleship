@@ -23,18 +23,16 @@ import javax.swing.JButton;
  */
 public class GameUI extends JFrame implements ActionListener {
 
-  public Game game;
-  public JTextField tf1;
-  public JButton done;
-  public JButton placeMinesweeper;
-  public JButton placeFrigate;
-  public JButton placeAircraftCarrier;
-  public Board opponent;
-  public Board own;
+  private Game game;
+  private JTextField tf1;
+  private JButton done;
+  private JButton placeMinesweeper;
+  private JButton placeFrigate;
+  private JButton placeAircraftCarrier;
+  protected Board opponent;
+  protected Board own;
 
-  /** Creates a new instance of GameUI */
   public GameUI(Game game) {
-    /** Define variables */
     JPanel northPanel = new JPanel(new BorderLayout());
     JPanel centerPanel = new JPanel(new BorderLayout());
     JPanel southPanel = new JPanel();

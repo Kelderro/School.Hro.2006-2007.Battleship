@@ -21,28 +21,28 @@ class AudioManagerTest {
 
   @Test
   void PlaySplashAudio_ReturnAudioLength() {
-    Long length = this.audioManager.PlaySplash();
+    Long length = this.audioManager.playSplash();
 
     assertTrue(length > 0);
   }
 
   @Test
   void PlayHitAudio_ReturnAudioLength() {
-    Long length = this.audioManager.PlayHit();
+    Long length = this.audioManager.playHit();
 
     assertTrue(length > 0);
   }
 
   @Test
   void PlayStartAudio_ReturnAudioLength() {
-    Long length = this.audioManager.PlayStart();
+    Long length = this.audioManager.playStart();
 
     assertTrue(length > 0);
   }
 
   @Test
   void PlayBoatSunkAudio_ReturnAudioLength() {
-    Long length = this.audioManager.PlayBoatSunk();
+    Long length = this.audioManager.playBoatSunk();
 
     assertTrue(length > 0);
   }

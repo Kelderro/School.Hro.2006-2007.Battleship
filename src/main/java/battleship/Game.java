@@ -43,14 +43,14 @@ public abstract class Game implements ActionListener {
 
   private Boat boat;
   private Boat[] boats;
-  public Square[][] squares;
+  private Square[][] squares;
   protected GameUI ui;
   protected BufferedReader in;
   protected PrintWriter out;
   private Timer timer;
   protected Socket socket;
 
-  public AudioManager audioManager;
+  protected AudioManager audioManager;
 
   private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
@@ -100,7 +100,7 @@ public abstract class Game implements ActionListener {
     this.disableAllBoatButtons();
   }
 
-  public void zeePaneelKnop(int row, int column) {
+  public void boardButton(int row, int column) {
     Square vak = squares[row][column];
 
     if (settingUp) {
@@ -111,10 +111,10 @@ public abstract class Game implements ActionListener {
           boats[amountOfBoats] = boat;
           amountOfBoats++;
           this.enableAvailableBoatButtons();
-          this.logger.info("\tBoatNumber[" + this.amountOfBoats
-              + "] has been placed.\n\tTotal amount of boats: " + this.maxAmountOfBoats);
+          this.logger.info("\tBoatNumber[{}] has been placed." +
+              "\n\tTotal amount of boats: {}", this.amountOfBoats, this.maxAmountOfBoats);
           if (this.maxAmountOfBoats == this.amountOfBoats) {
-            this.logger.info("\nDone with placing the boats!\n");
+            this.logger.info("Done with placing the boats!");
             settingUp = false;
             ui.enableDoneButton(true);
           }
@@ -122,7 +122,7 @@ public abstract class Game implements ActionListener {
       }
     } else if (yourTurn) {
       yourTurn = false;
-      this.logger.info("Attempt [" + row + "," + column + "] was ");
+      this.logger.info("Attempt [{},{}] was ", row, column);
 
       String strLine = "";
       try {
@@ -132,14 +132,10 @@ public abstract class Game implements ActionListener {
 
         Condition condition = Condition.valueOf(strLine);
 
-        PlayConditionAudio(condition);
+        playConditionAudio(condition);
 
         this.logger.debug(strLine);
-        // if (condition == 5) {
-        // JOptionPane.showMessageDialog(null, "An error occured!\n\nI have no idea what
-        // this is:\n" + strLine);
-        // System.exit(0);
-        // } else
+
         if (condition == Condition.LOST) {
           JOptionPane.showMessageDialog(null, "You have won the game!\nWorship\n\nNow get a life!");
           System.exit(0);
@@ -170,7 +166,7 @@ public abstract class Game implements ActionListener {
     Condition condition = checkAttempt(Integer.parseInt(arrStrLine[1]), Integer.parseInt(arrStrLine[2]));
     ui.own.setBoatButton(Integer.parseInt(arrStrLine[1]), Integer.parseInt(arrStrLine[2]), condition);
 
-    PlayConditionAudio(condition);
+    playConditionAudio(condition);
 
     String strCondition = condition.toString();
 
@@ -184,16 +180,16 @@ public abstract class Game implements ActionListener {
     ui.setText("It's your turn!");
   }
 
-  private void PlayConditionAudio(Condition condition) {
+  private void playConditionAudio(Condition condition) {
     switch (condition) {
       case SPLASH:
-        audioManager.PlaySplash();
+        audioManager.playSplash();
         break;
       case HIT:
-        audioManager.PlayHit();
+        audioManager.playHit();
         break;
       case SUNK:
-        audioManager.PlayBoatSunk();
+        audioManager.playBoatSunk();
         break;
       default:
         break;
@@ -202,13 +198,13 @@ public abstract class Game implements ActionListener {
 
   public Condition checkAttempt(int row, int column) {
     Square square = squares[row][column];
-    Boat boat = square.getBoat();
+    Boat squareBoat = square.getBoat();
     Condition condition = Condition.SPLASH;
 
-    if (boat != null) {
+    if (squareBoat != null) {
       square.setHit();
       condition = Condition.HIT;
-      if (boat.checkSunk()) {
+      if (squareBoat.checkSunk()) {
         condition = Condition.SUNK;
         if (checkLost()) {
           condition = Condition.LOST;
