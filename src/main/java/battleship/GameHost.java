@@ -35,7 +35,7 @@ public class GameHost extends Game {
 
     waitForOpponent();
 
-    System.out.println("BattleShip for:\n" +
+    this.logger.debug("BattleShip for:\n" +
         "\n\r      ___           ___           ___           ___           ___" +
         "\n\r     /\\__\\         /\\  \\         /\\  \\         /\\  \\         /\\__\\" +
         "\n\r    /:/ _/_       /::\\  \\       /::\\  \\        \\:\\  \\       /:/  /" +
@@ -69,8 +69,6 @@ public class GameHost extends Game {
         "\n\r   \\:\\/:/  /  " +
         "\n\r    \\::/  /   " +
         "\n\r     \\/__/    ");
-
-    System.out.flush();
 
     ui.setText("Found an opponent");
 
