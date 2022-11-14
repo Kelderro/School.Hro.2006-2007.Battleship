@@ -1,7 +1,11 @@
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 
 import battleship.Boat;
+import battleship.Square;
 
 class BoatTest {
   @Test
@@ -42,6 +46,103 @@ class BoatTest {
     assertThrows(IllegalArgumentException.class, () -> {
       new UnitTestBoat(1, "  ");
     });
+  }
+
+  @Test
+  void PlaceBoatOnUnclaimedSquare_ReturnTrue() {
+    // Arrange
+    UnitTestBoat unitTestBoat = new UnitTestBoat(5, "UnitTest");
+    Square square = new Square(1, 0);
+
+    // Act
+    Boolean claim = unitTestBoat.claimSquare(square);
+
+    // Assert
+    assertTrue(claim);
+  }
+
+  @Test
+  void PlaceBoatOnClaimedSquare_ReturnFalse() {
+    // Arrange
+    UnitTestBoat unitTestBoat = new UnitTestBoat(5, "UnitTest");
+    Square square = new Square(1, 0);
+    square.setBoat(unitTestBoat);
+
+    // Act
+    Boolean claim = unitTestBoat.claimSquare(square);
+
+    // Assert
+    assertFalse(claim);
+  }
+
+  @Test
+  void Place_HorizontalBoat_Successful() {
+    UnitTestBoat unitTestBoat = new UnitTestBoat(5, "UnitTest");
+    Square square = new Square(1, 0);
+
+    Boolean claim = unitTestBoat.claimSquare(square);
+
+    assertTrue(claim);
+
+    square = new Square(2, 0);
+    claim = unitTestBoat.claimSquare(square);
+
+    assertTrue(claim);
+
+    square = new Square(3, 0);
+    claim = unitTestBoat.claimSquare(square);
+
+    assertTrue(claim);
+
+    square = new Square(0, 0);
+    claim = unitTestBoat.claimSquare(square);
+
+    assertTrue(claim);
+
+    square = new Square(5, 0);
+    claim = unitTestBoat.claimSquare(square);
+
+    assertFalse(claim);
+
+    square = new Square(4, 0);
+    claim = unitTestBoat.claimSquare(square);
+
+    assertTrue(claim);
+  }
+
+  @Test
+  void Place_VerticalBoat_Successful() {
+    UnitTestBoat unitTestBoat = new UnitTestBoat(5, "UnitTest");
+    Square square = new Square(0, 1);
+
+    Boolean claim = unitTestBoat.claimSquare(square);
+
+    assertTrue(claim);
+
+    square = new Square(0, 2);
+    claim = unitTestBoat.claimSquare(square);
+
+    assertTrue(claim);
+
+    square = new Square(0, 3);
+    claim = unitTestBoat.claimSquare(square);
+
+    assertTrue(claim);
+
+    square = new Square(0, 0);
+    claim = unitTestBoat.claimSquare(square);
+
+    assertTrue(claim);
+
+    square = new Square(0, 5);
+    claim = unitTestBoat.claimSquare(square);
+
+    assertFalse(claim);
+
+    square = new Square(0, 4);
+    claim = unitTestBoat.claimSquare(square);
+
+    assertTrue(claim);
   }
 
   private class UnitTestBoat extends Boat {

@@ -101,7 +101,7 @@ public abstract class Game implements ActionListener {
   public void settingUp(int row, int column) {
     Square square = squares[row][column];
 
-    if (!boat.addSquare(square)) {
+    if (!boat.claimSquare(square)) {
       return;
     }
 
