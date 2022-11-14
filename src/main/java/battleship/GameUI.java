@@ -14,6 +14,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.swing.JFrame;
 import javax.swing.JButton;
 
@@ -31,6 +35,8 @@ public class GameUI extends JFrame implements ActionListener {
   private JButton placeAircraftCarrier;
   protected Board opponent;
   protected Board own;
+
+  private static final Logger logger = LoggerFactory.getLogger(GameUI.class.getName());
 
   public GameUI(Game game) {
     JPanel northPanel = new JPanel(new BorderLayout());
@@ -102,21 +108,30 @@ public class GameUI extends JFrame implements ActionListener {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     /** Default: disable button in the southPanel **/
-    enablePlaceMinesweeper(false);
     enableDoneButton(false);
+    enablePlaceMinesweeper(false);
     enablePlaceFrigate(false);
     enablePlaceAircraftCarrier(false);
   }
 
   public void actionPerformed(ActionEvent e) {
-    if (e.getActionCommand() == "done") {
-      game.doneButton();
-    } else if (e.getActionCommand() == "placeMinesweeper") {
-      game.createMinesweeper();
-    } else if (e.getActionCommand() == "placeFrigate") {
-      game.createFrigate();
-    } else if (e.getActionCommand() == "placeAircraftCarrier") {
-      game.createAircraftCarrier();
+    switch (e.getActionCommand()) {
+      case "done":
+        game.doneButton();
+        break;
+      case "placeMinesweeper":
+        game.createMinesweeper();
+        break;
+      case "placeFrigate":
+        game.createFrigate();
+        break;
+      case "placeAircraftCarrier":
+        game.createAircraftCarrier();
+        break;
+      default:
+        logger.debug("A not supported action has been performaned. The action command is '{}'",
+            e.getActionCommand());
+        break;
     }
   }
 
@@ -124,12 +139,12 @@ public class GameUI extends JFrame implements ActionListener {
     tf1.setText(text);
   }
 
-  public void enablePlaceMinesweeper(boolean value) {
-    placeMinesweeper.setEnabled(value);
-  }
-
   public void enableDoneButton(boolean value) {
     done.setEnabled(value);
+  }
+
+  public void enablePlaceMinesweeper(boolean value) {
+    placeMinesweeper.setEnabled(value);
   }
 
   public void enablePlaceAircraftCarrier(boolean value) {

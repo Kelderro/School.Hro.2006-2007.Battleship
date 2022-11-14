@@ -39,25 +39,24 @@ public class AudioManager {
     }
 
     AudioInputStream ais;
-    try {
-      ais = AudioSystem.getAudioInputStream(new File(fileName));
+    File file = new File(soundPath + fileName);
 
-      try {
-        Clip clip = AudioSystem.getClip();
-        try {
-          clip.open(ais);
-        } catch (LineUnavailableException e) {
-          this.logger.error("Unable to play audio file '{}' as the line is not available", fileName, e);
-        }
-        clip.start();
-        return clip.getMicrosecondLength() / 1000;
-      } catch (Exception e) {
-        this.logger.error("An exception occured when trying to play audio file '{}'", fileName, e);
-      }
+    try {
+      ais = AudioSystem.getAudioInputStream(file);
+
+      Clip clip = AudioSystem.getClip();
+      clip.open(ais);
+      clip.start();
+      return clip.getMicrosecondLength() / 1000;
+
+    } catch (LineUnavailableException e) {
+      this.logger.error("Unable to play audio file '{}' as the line is not available", fileName, e);
     } catch (UnsupportedAudioFileException e) {
       this.logger.error("The provided audio file '{}' is not supported", fileName, e);
     } catch (IOException e) {
       this.logger.error("An IO exception occured when trying to play audio file '{}'", fileName, e);
+    } catch (Exception e) {
+      this.logger.error("An exception occured when trying to play audio file '{}'", fileName, e);
     }
     return 0;
   }

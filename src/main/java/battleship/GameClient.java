@@ -86,7 +86,9 @@ public class GameClient extends Game {
   public void waitForHostToBeReady() {
     ui.setText("Waiting for host to be ready");
     try {
-      while (!in.readLine().equals("done")) {
+      String incomingMessage = "";
+      while (!incomingMessage.equalsIgnoreCase("done")) {
+        incomingMessage = in.readLine();
       }
     } catch (IOException ex) {
       this.logger.error("Error occured", ex);

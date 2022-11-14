@@ -12,13 +12,12 @@ package battleship;
  */
 public class Square {
 
-    public int row;
-    public int column;
-    public boolean hit;
+    protected int row;
+    protected int column;
+    private boolean hit;
 
-    public Boat boat;
+    private Boat boat;
 
-    /** Creates a new instance of Square */
     public Square(int row, int column) {
         this.row = row;
         this.column = column;
