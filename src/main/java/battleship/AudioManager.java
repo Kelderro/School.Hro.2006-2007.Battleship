@@ -17,24 +17,24 @@ public class AudioManager {
   private String soundPath = "./battleship/resources/sounds/";
   private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
-  public long PlaySplash() {
-    return Play("splash.wav");
+  public long playSplash() {
+    return play("splash.wav");
   }
 
-  public long PlayHit() {
-    return Play("explode.wav");
+  public long playHit() {
+    return play("explode.wav");
   }
 
-  public long PlayStart() {
-    return Play("horn.wav");
+  public long playStart() {
+    return play("horn.wav");
   }
 
-  public long PlayBoatSunk() {
-    return Play("databan.wav");
+  public long playBoatSunk() {
+    return play("databan.wav");
   }
 
-  private long Play(String fileName) {
-    if (!CanPlayAudio(fileName)) {
+  private long play(String fileName) {
+    if (!canPlayAudio(fileName)) {
       return 0;
     }
 
@@ -47,22 +47,22 @@ public class AudioManager {
         try {
           clip.open(ais);
         } catch (LineUnavailableException e) {
-          this.logger.error("Unable to play audio file '%s' as the line is not available", fileName, e);
+          this.logger.error("Unable to play audio file '{}' as the line is not available", fileName, e);
         }
         clip.start();
         return clip.getMicrosecondLength() / 1000;
       } catch (Exception e) {
-        this.logger.error("An exception occured when trying to play audio file '%s'", fileName, e);
+        this.logger.error("An exception occured when trying to play audio file '{}'", fileName, e);
       }
     } catch (UnsupportedAudioFileException e) {
-      this.logger.error("The provided audio file '%s' is not supported", fileName, e);
+      this.logger.error("The provided audio file '{}' is not supported", fileName, e);
     } catch (IOException e) {
-      this.logger.error("An IO exception occured when trying to play audio file '%s'", fileName, e);
+      this.logger.error("An IO exception occured when trying to play audio file '{}'", fileName, e);
     }
     return 0;
   }
 
-  private boolean CanPlayAudio(String fileName) {
+  private boolean canPlayAudio(String fileName) {
     if (AudioSystem.getMixerInfo().length == 0) {
       this.logger.info("No audio system found. Unable to play any sound on this system");
       return false;
@@ -81,7 +81,7 @@ public class AudioManager {
     File file = new File(soundPath + fileName);
 
     if (!file.exists()) {
-      this.logger.info("Unable to find play audio file as file does not exist under path: '%s'.",
+      this.logger.info("Unable to find play audio file as file does not exist under path: '{}'.",
           file.getAbsolutePath());
       return false;
     }

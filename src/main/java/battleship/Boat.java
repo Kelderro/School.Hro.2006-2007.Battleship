@@ -24,7 +24,7 @@ public abstract class Boat {
 
   private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
-  public Boat(int maxSquareCount, String boatName) {
+  protected Boat(int maxSquareCount, String boatName) {
     if (maxSquareCount < 1) {
       throw new IllegalArgumentException("maxSquareCount cannot zero or lower");
     }
@@ -60,8 +60,8 @@ public abstract class Boat {
   }
 
   protected boolean addSquare(Square square) {
-    this.logger.info(boatName + ":\n\tNumber of squares placed: " + count + "\n\tTotal amount of squares:\t"
-        + squares.length);
+    this.logger.info("{}:\n\tNumber of squares placed: {}\n\tTotal amount of squares:\t{}", boatName, count,
+        squares.length);
     if (square.getBoat() == null) {
       if (count == 0) {
         squares[count++] = square;
