@@ -27,6 +27,11 @@ public class AudioManager {
   }
 
   private long Play(String fileName) {
+    if (AudioSystem.getMixerInfo().length == 0) {
+      System.out.println("No audio system found. Unable to play any sound on this system");
+      return 0;
+    }
+
     if (!fileName.endsWith(".wav")) {
       System.out.println("The provided file name is not a wav file based on the extension");
       return 0;

@@ -1,4 +1,7 @@
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.*;
+
+import javax.sound.sampled.AudioSystem;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +13,7 @@ class AudioManagerTest {
 
   @BeforeEach
   void CreateAudioManager() {
+    assumeTrue(AudioSystem.getMixerInfo().length > 0);
     this.audioManager = new AudioManager();
   }
 
