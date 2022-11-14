@@ -95,9 +95,17 @@ public abstract class Boat {
         sameRow = true;
       }
     }
-    this.logger.info("\tAfter " + count + " decision(s) and same artificial intelligence we decided that we "
-        + ((sameRow) ? "need to stay in the same row"
-            : (sameColumn) ? "need to stay in the same column" : "can go everywhere"));
+
+    String nextAction = "need to stay in the same row";
+
+    if (!sameRow) {
+      nextAction = (sameColumn)
+          ? "need to stay in the same column"
+          : "can go everywhere";
+    }
+
+    this.logger.info("\tAfter {} decision(s) and same artificial intelligence we decided that we {}", count,
+        nextAction);
 
     if (lastSquare.column == square.column && ((lastSquare.row == square.row - 1 || lastSquare.row == square.row + 1)
         || (firstSquare.row == square.row - 1 || firstSquare.row == square.row + 1))) {

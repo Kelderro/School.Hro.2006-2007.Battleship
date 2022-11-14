@@ -43,7 +43,7 @@ public abstract class Game implements ActionListener {
 
   private Boat boat;
   private Boat[] boats;
-  public Square[][] squares;
+  private Square[][] squares;
   protected GameUI ui;
   protected BufferedReader in;
   protected PrintWriter out;
@@ -100,7 +100,7 @@ public abstract class Game implements ActionListener {
     this.disableAllBoatButtons();
   }
 
-  public void zeePaneelKnop(int row, int column) {
+  public void boardButton(int row, int column) {
     Square vak = squares[row][column];
 
     if (settingUp) {
@@ -198,13 +198,13 @@ public abstract class Game implements ActionListener {
 
   public Condition checkAttempt(int row, int column) {
     Square square = squares[row][column];
-    Boat boat = square.getBoat();
+    Boat squareBoat = square.getBoat();
     Condition condition = Condition.SPLASH;
 
-    if (boat != null) {
+    if (squareBoat != null) {
       square.setHit();
       condition = Condition.HIT;
-      if (boat.checkSunk()) {
+      if (squareBoat.checkSunk()) {
         condition = Condition.SUNK;
         if (checkLost()) {
           condition = Condition.LOST;

@@ -24,7 +24,6 @@ public class Board extends JPanel implements ActionListener {
     private Game game;
     private JButton[][] buttons;
 
-    /** Creates a new instance of SeaPanel */
     public Board(Game game) {
         this.game = game;
         buttons = new JButton[size][size];
@@ -54,12 +53,14 @@ public class Board extends JPanel implements ActionListener {
             case SUNK:
                 buttons[row][column].setBackground(Color.RED);
                 break;
+            default:
+                break;
         }
     }
 
     public void actionPerformed(ActionEvent e) {
-        String Location[];
-        Location = e.getActionCommand().split(",");
-        game.zeePaneelKnop(Integer.parseInt(Location[0]), Integer.parseInt(Location[1]));
+        String[] location;
+        location = e.getActionCommand().split(",");
+        game.boardButton(Integer.parseInt(location[0]), Integer.parseInt(location[1]));
     }
 }
