@@ -13,11 +13,16 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import javax.swing.JOptionPane;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  *
  * @author 0777974
  */
 public class GameClient extends Game {
+
+  private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
   public static void main(String[] args) {
     new GameClient();
@@ -38,7 +43,7 @@ public class GameClient extends Game {
 
       ui.setText("Connection via port number '1337'. IP address of the server is unknown.");
 
-      System.out.println("Make a connection");
+      this.logger.info("Make a connection");
 
       /** IP aanvragen */
       String ipAddress = JOptionPane.showInputDialog(null, "Please, provide the IP address of the server", "IP address",
@@ -47,7 +52,7 @@ public class GameClient extends Game {
       /** Een client socket maken */
       socket = new Socket(ipAddress, 1337);
 
-      System.out.println("Connection established with the server");
+      this.logger.info("Connection established with the server");
 
       ui.setText("Tegenstander gevonden, plaats de boten.");
 
@@ -59,22 +64,21 @@ public class GameClient extends Game {
       out = new PrintWriter(
           socket.getOutputStream(), true);
 
-      System.out.println("Fully loaded");
+      this.logger.info("Fully loaded");
 
       settingUp = true;
 
     } catch (IOException ex) {
-      System.err.println(ex);
+      this.logger.error("Error occured", ex);
     }
   }
 
   public void doneButton() {
     ui.enableDoneButton(false);
-    out.println("done");
-    out.flush();
+    this.logger.info("done");
     waitForHostToBeReady();
     ui.setText("Setting up is done, the game will start!");
-    System.out.println("Let's get ready to rumble!");
+    this.logger.info("Let's get ready to rumble!");
     this.audioManager.PlayStart();
     yourTurn = true;
   }
@@ -85,7 +89,7 @@ public class GameClient extends Game {
       while (!in.readLine().equals("done")) {
       }
     } catch (IOException ex) {
-      System.err.println(ex);
+      this.logger.error("Error occured", ex);
     }
   }
 }
