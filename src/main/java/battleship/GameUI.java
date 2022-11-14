@@ -129,7 +129,7 @@ public class GameUI extends JFrame implements ActionListener {
         game.createAircraftCarrier();
         break;
       default:
-        this.logger.debug("A not supported action has been performaned. The action command is '{}'",
+        logger.debug("A not supported action has been performaned. The action command is '{}'",
             e.getActionCommand());
         break;
     }
