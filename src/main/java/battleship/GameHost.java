@@ -113,7 +113,7 @@ public class GameHost extends Game {
 
   public void doneButton() {
     ui.enableDoneButton(false);
-    this.logger.debug("done")
+    this.logger.debug("done");
     this.audioManager.PlayStart();
     waitForTurn();
   }
