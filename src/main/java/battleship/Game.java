@@ -17,6 +17,9 @@ import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import javax.swing.Timer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import battleship.boats.AircraftCarrier;
 import battleship.boats.Frigate;
 import battleship.boats.Minesweeper;
@@ -57,6 +60,8 @@ public abstract class Game extends Applet implements ActionListener {
   public AudioClip clipHit;
   public AudioClip clipSunk;
 
+  private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+
   /** Creates a new instance of Spel */
   public Game() {
 
@@ -75,7 +80,7 @@ public abstract class Game extends Applet implements ActionListener {
       clipHit = Applet.newAudioClip(fileHit.toURL());
       clipSunk = Applet.newAudioClip(fileSunk.toURL());
     } catch (MalformedURLException e) {
-      System.out.println("Exception while loading / initializing the sound files");
+      this.logger.warn("Exception while loading / initializing the sound files");
     }
 
     /** Create a timer */
@@ -126,10 +131,10 @@ public abstract class Game extends Applet implements ActionListener {
           boats[amountOfBoats] = boat;
           amountOfBoats++;
           this.enableAvailableBoatButtons();
-          System.out.println("\tBoatNumber[" + this.amountOfBoats
+          this.logger.info("\tBoatNumber[" + this.amountOfBoats
               + "] has been placed.\n\tTotal amount of boats: " + this.maxAmountOfBoats);
           if (this.maxAmountOfBoats == this.amountOfBoats) {
-            System.out.println("\nDone with placing the boats!\n");
+            this.logger.info("\nDone with placing the boats!\n");
             settingUp = false;
             ui.enableDoneButton(true);
           }
@@ -137,9 +142,8 @@ public abstract class Game extends Applet implements ActionListener {
       }
     } else if (yourTurn) {
       yourTurn = false;
-      System.out.print("Attempt [" + row + "," + column + "] was ");
-      out.println("attempt," + row + "," + column);
-      out.flush();
+      this.logger.info("Attempt [" + row + "," + column + "] was ");
+
       String strLine = "";
       try {
         while (strLine.equals("")) {
@@ -162,7 +166,7 @@ public abstract class Game extends Applet implements ActionListener {
             break;
         }
 
-        System.out.println(strLine);
+        this.logger.debug(strLine);
         // if (condition == 5) {
         // JOptionPane.showMessageDialog(null, "An error occured!\n\nI have no idea what
         // this is:\n" + strLine);
@@ -174,7 +178,7 @@ public abstract class Game extends Applet implements ActionListener {
         }
         ui.opponent.setBoatButton(row, column, condition);
       } catch (IOException ex) {
-        System.err.println(ex);
+        this.logger.error("Error occured", ex);
       }
       timer.start();
       ui.setText("Wait for your turn!");
@@ -192,7 +196,7 @@ public abstract class Game extends Applet implements ActionListener {
         arrStrLine = in.readLine().split(",");
       }
     } catch (IOException ex) {
-      System.err.println(ex);
+      this.logger.error("Error occured", ex);
     }
     System.out.print("Incoming attempt [" + arrStrLine[1] + "," + arrStrLine[2] + "] is ");
     Condition condition = checkPoging(Integer.parseInt(arrStrLine[1]), Integer.parseInt(arrStrLine[2]));
@@ -214,9 +218,7 @@ public abstract class Game extends Applet implements ActionListener {
 
     String strCondition = condition.toString();
 
-    out.println(strCondition);
-    out.flush();
-    System.out.println(strCondition);
+    this.logger.debug(strCondition);
 
     if (condition == Condition.LOST) {
       JOptionPane.showMessageDialog(null, "Lost! WTF why!!");

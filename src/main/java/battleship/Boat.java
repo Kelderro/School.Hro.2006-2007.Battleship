@@ -6,6 +6,9 @@
 
 package battleship;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  *
  * @author 0777974
@@ -18,6 +21,8 @@ public abstract class Boat {
   private String boatName;
 
   private Square[] squares;
+
+  private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
   public Boat(int maxSquareCount, String boatName) {
     if (maxSquareCount < 1) {
@@ -55,7 +60,7 @@ public abstract class Boat {
   }
 
   protected boolean addSquare(Square square) {
-    System.out.println(boatName + ":\n\tNumber of squares placed: " + count + "\n\tTotal amount of squares:\t"
+    this.logger.info(boatName + ":\n\tNumber of squares placed: " + count + "\n\tTotal amount of squares:\t"
         + squares.length);
     if (square.getBoat() == null) {
       if (count == 0) {
@@ -90,7 +95,7 @@ public abstract class Boat {
         sameRow = true;
       }
     }
-    System.out.println("\tAfter " + count + " decision(s) and same artificial intelligence we decided that we "
+    this.logger.info("\tAfter " + count + " decision(s) and same artificial intelligence we decided that we "
         + ((sameRow) ? "need to stay in the same row"
             : (sameColumn) ? "need to stay in the same column" : "can go everywhere"));
 
