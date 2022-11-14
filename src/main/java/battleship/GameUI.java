@@ -14,6 +14,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.swing.JFrame;
 import javax.swing.JButton;
 
@@ -31,6 +35,8 @@ public class GameUI extends JFrame implements ActionListener {
   private JButton placeAircraftCarrier;
   protected Board opponent;
   protected Board own;
+
+  private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
   public GameUI(Game game) {
     JPanel northPanel = new JPanel(new BorderLayout());
@@ -112,12 +118,20 @@ public class GameUI extends JFrame implements ActionListener {
     switch (e.getActionCommand()) {
       case "done":
         game.doneButton();
+        break;
       case "placeMinesweeper":
         game.createMinesweeper();
+        break;
       case "placeFrigate":
         game.createFrigate();
+        break;
       case "placeAircraftCarrier":
         game.createAircraftCarrier();
+        break;
+      default:
+        this.logger.debug("A not supported action has been performaned. The action command is '{}'",
+            e.getActionCommand());
+        break;
     }
   }
 
