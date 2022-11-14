@@ -6,7 +6,6 @@
 
 package battleship;
 
-import java.applet.Applet;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -28,7 +27,7 @@ import javax.swing.JOptionPane;
  *
  * @author 0777974
  */
-public abstract class Game extends Applet implements ActionListener {
+public abstract class Game implements ActionListener {
 
   protected boolean settingUp = false;
   protected boolean yourTurn = false;
