@@ -9,8 +9,13 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class AudioManager {
+
   private String soundPath = "./battleship/resources/sounds/";
+  private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
   public long PlaySplash() {
     return Play("splash.wav");
@@ -29,24 +34,7 @@ public class AudioManager {
   }
 
   private long Play(String fileName) {
-    if (AudioSystem.getMixerInfo().length == 0) {
-      System.out.println("No audio system found. Unable to play any sound on this system");
-    }
-
-    if (!fileName.endsWith(".wav")) {
-      System.out.println("The provided file name is not a wav file based on the extension");
-    }
-
-    if (!fileName.matches("^([A-Za-z])+\\.wav$")) {
-      System.out.println("The provided filename does not meet the expected regular expression validation.");
-    }
-
-    File file = new File(soundPath + fileName);
-
-    if (!file.exists()) {
-      System.out.println(
-          String.format("Unable to find play audio file as file does not exist under path: '%s'.",
-              file.getAbsolutePath()));
+    if (!CanPlayAudio(fileName)) {
       return 0;
     }
 
@@ -59,18 +47,45 @@ public class AudioManager {
         try {
           clip.open(ais);
         } catch (LineUnavailableException e) {
-          e.printStackTrace();
+          this.logger.error("Unable to play audio file '%s' as the line is not available", fileName, e);
         }
         clip.start();
         return clip.getMicrosecondLength() / 1000;
       } catch (Exception e) {
-        e.printStackTrace();
+        this.logger.error("An exception occured when trying to play audio file '%s'", fileName, e);
       }
     } catch (UnsupportedAudioFileException e) {
-      e.printStackTrace();
+      this.logger.error("The provided audio file '%s' is not supported", fileName, e);
     } catch (IOException e) {
-      e.printStackTrace();
+      this.logger.error("An IO exception occured when trying to play audio file '%s'", fileName, e);
     }
     return 0;
+  }
+
+  private boolean CanPlayAudio(String fileName) {
+    if (AudioSystem.getMixerInfo().length == 0) {
+      this.logger.info("No audio system found. Unable to play any sound on this system");
+      return false;
+    }
+
+    if (!fileName.endsWith(".wav")) {
+      this.logger.info("The provided file name is not a wav file based on the extension");
+      return false;
+    }
+
+    if (!fileName.matches("^([A-Za-z])+\\.wav$")) {
+      this.logger.info("The provided filename does not meet the expected regular expression validation.");
+      return false;
+    }
+
+    File file = new File(soundPath + fileName);
+
+    if (!file.exists()) {
+      this.logger.info("Unable to find play audio file as file does not exist under path: '%s'.",
+          file.getAbsolutePath());
+      return false;
+    }
+
+    return true;
   }
 }
