@@ -1,8 +1,5 @@
 name: SonarCloud
 on:
-  push:
-    branches:
-      - main
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
@@ -37,21 +34,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-  publish:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Create release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          tag_name: v0.0.${{ github.run_number }}.${{ github.run_attempt }}
-          release_name: Release
-            v0.0.${{ github.run_number }}.${{ github.run_attempt }}
-          body: New release triggered by commit ${{ github.sha }}
-          draft: false
-          prerelease: false
