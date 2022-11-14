@@ -7,7 +7,6 @@
 package battleship;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.function.Function;
 
 import org.slf4j.Logger;
@@ -124,16 +123,12 @@ public abstract class Boat {
           horizontalBoat ? "horizontal" : "vertical", horizontalBoat ? "row" : "column");
     }
 
-    if (verticalBoat) {
-      if (isLinked(square, s -> s.row)) {
-        return true;
-      }
+    if (verticalBoat && isLinked(square, p -> p.row)) {
+      return true;
     }
 
-    if (horizontalBoat) {
-      if (isLinked(square, s -> s.column)) {
-        return true;
-      }
+    if (horizontalBoat && isLinked(square, p -> p.column)) {
+      return true;
     }
 
     return false;
@@ -145,32 +140,26 @@ public abstract class Boat {
    * 
    * @param square           The square that the player want to claim for the
    *                         boat.
-   * @param retrieveProperty Delegate to retrieve the column or the row value of
+   * @param relevantProperty Delegate to retrieve the column or the row value of
    *                         the square object that is going to be claimed.
    * @return true, the square is correctly placed relative to the already placed
    *         squares for the boat. false, otherwise.
    */
-  private Boolean isLinked(Square square, Function<Square, Integer> retrieveProperty) {
+  private Boolean isLinked(Square square, Function<Square, Integer> relevantProperty) {
     // Sort the squares to be certain the first square of the boat is at position 0
     // of the array and the last square of the boat at the end of the array.
     // Depending on how the boat is placed we need to sort by column or by row
     // property.
-    Arrays.sort(squares, new Comparator<Square>() {
-      public int compare(Square obj, Square other) {
-        if (obj == null) {
-          return other == null ? 0 : 1;
-        } else if (other == null) {
-          return -1;
-        }
-        return Integer.compare(retrieveProperty.apply(obj), retrieveProperty.apply(other));
+    Arrays.sort(squares, (obj1, obj2) -> {
+      if (obj1 == null) {
+        return obj2 == null ? 0 : 1;
+      } else if (obj2 == null) {
+        return -1;
       }
+      return Integer.compare(relevantProperty.apply(obj1), relevantProperty.apply(obj2));
     });
 
-    if (retrieveProperty.apply(square) == retrieveProperty.apply(squares[0]) - 1
-        || retrieveProperty.apply(square) == retrieveProperty.apply(squares[currentSize - 1]) + 1) {
-      return true;
-    }
-
-    return false;
+    return relevantProperty.apply(square) == relevantProperty.apply(squares[0]) - 1
+        || relevantProperty.apply(square) == relevantProperty.apply(squares[currentSize - 1]) + 1;
   }
 }

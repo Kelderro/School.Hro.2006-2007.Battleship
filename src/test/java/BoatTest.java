@@ -49,7 +49,34 @@ class BoatTest {
   }
 
   @Test
-  void PlaceHorizontalBoat() {
+  void PlaceBoatOnUnclaimedSquare_ReturnTrue() {
+    // Arrange
+    UnitTestBoat unitTestBoat = new UnitTestBoat(5, "UnitTest");
+    Square square = new Square(1, 0);
+
+    // Act
+    Boolean claim = unitTestBoat.claimSquare(square);
+
+    // Assert
+    assertTrue(claim);
+  }
+
+  @Test
+  void PlaceBoatOnClaimedSquare_ReturnFalse() {
+    // Arrange
+    UnitTestBoat unitTestBoat = new UnitTestBoat(5, "UnitTest");
+    Square square = new Square(1, 0);
+    square.setBoat(unitTestBoat);
+
+    // Act
+    Boolean claim = unitTestBoat.claimSquare(square);
+
+    // Assert
+    assertFalse(claim);
+  }
+
+  @Test
+  void Place_HorizontalBoat_Successful() {
     UnitTestBoat unitTestBoat = new UnitTestBoat(5, "UnitTest");
     Square square = new Square(1, 0);
 
@@ -84,7 +111,7 @@ class BoatTest {
   }
 
   @Test
-  void PlaceVerticalBoat() {
+  void Place_VerticalBoat_Successful() {
     UnitTestBoat unitTestBoat = new UnitTestBoat(5, "UnitTest");
     Square square = new Square(0, 1);
 
