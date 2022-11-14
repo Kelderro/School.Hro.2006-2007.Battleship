@@ -36,7 +36,7 @@ public class GameUI extends JFrame implements ActionListener {
   protected Board opponent;
   protected Board own;
 
-  private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+  private static final Logger logger = LoggerFactory.getLogger(GameUI.class.getName());
 
   public GameUI(Game game) {
     JPanel northPanel = new JPanel(new BorderLayout());
