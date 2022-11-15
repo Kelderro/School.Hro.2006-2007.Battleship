@@ -75,8 +75,13 @@ public class GameClient extends Game {
 
   public void doneButton() {
     ui.enableDoneButton(false);
-    this.logger.info("done");
+
+    // Inform the server that the client is done with placing boats
+    out.println("done");
+    out.flush();
+
     waitForHostToBeReady();
+
     ui.setText("Setting up is done, the game will start!");
     this.logger.info("Let's get ready to rumble!");
     this.audioManager.playStart();
