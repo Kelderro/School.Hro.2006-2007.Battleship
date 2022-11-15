@@ -40,6 +40,7 @@ public abstract class Game implements ActionListener {
   private int maxAmountOfAircraftCarriers = 1;
   private int maxAmountOfBoats = maxAmountOfMinesweepers + maxAmountOfFrigates + maxAmountOfAircraftCarriers;
   private int amountOfBoats = 0;
+  public static final int portNumber = 1337;
 
   private Boat boat;
   private Boat[] boats;
@@ -84,18 +85,21 @@ public abstract class Game implements ActionListener {
     boat = new Minesweeper();
     amountOfMinesweepers++;
     this.disableAllBoatButtons();
+    this.ui.own.enableBoard(true);
   }
 
   public void createFrigate() {
     boat = new Frigate();
     amountOfFrigates++;
     this.disableAllBoatButtons();
+    this.ui.own.enableBoard(true);
   }
 
   public void createAircraftCarrier() {
     boat = new AircraftCarrier();
     amountOfAircraftCarriers++;
     this.disableAllBoatButtons();
+    this.ui.own.enableBoard(true);
   }
 
   public void settingUp(int row, int column) {
@@ -115,6 +119,8 @@ public abstract class Game implements ActionListener {
     boats[amountOfBoats] = boat;
     amountOfBoats++;
     this.enableAvailableBoatButtons();
+    this.ui.own.enableBoard(false);
+
     this.logger.info("\tBoatNumber[{}] has been placed." +
         "\n\tTotal amount of boats: {}", this.amountOfBoats, this.maxAmountOfBoats);
 

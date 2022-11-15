@@ -29,7 +29,7 @@ import javax.swing.JButton;
 public class GameUI extends JFrame implements ActionListener {
 
   private Game game;
-  private JTextField tf1;
+  private JTextField statusBar;
   private JButton done;
   private JButton placeMinesweeper;
   private JButton placeFrigate;
@@ -43,7 +43,7 @@ public class GameUI extends JFrame implements ActionListener {
     JPanel northPanel = new JPanel(new BorderLayout());
     JPanel centerPanel = new JPanel(new BorderLayout());
     JPanel southPanel = new JPanel();
-    tf1 = new JTextField();
+    statusBar = new JTextField();
     done = new JButton();
     placeMinesweeper = new JButton();
     placeFrigate = new JButton();
@@ -51,47 +51,40 @@ public class GameUI extends JFrame implements ActionListener {
     own = new Board(game);
     opponent = new Board(game);
 
-    /** Define global variable: game */
     this.game = game;
 
-    /** Config TextField: TF1 */
-    tf1.setText("Waiting for an opponent. Port `1337` is made available for an incoming connection.");
-    tf1.setEditable(false);
-    tf1.setBackground(Color.WHITE);
+    statusBar.setText(String.format("Waiting for an opponent. Port `%s` is made available for an incoming connection.",
+        Game.portNumber));
 
-    /** Config Button: done */
+    statusBar.setEditable(false);
+    statusBar.setBackground(Color.WHITE);
+
     done.setText("Done");
     done.setVisible(true);
     done.addActionListener(this);
     done.setActionCommand("done");
 
-    /** Config Button: placeMineSweeper */
     placeMinesweeper.setText("Place mine sweeper");
     placeMinesweeper.setVisible(true);
     placeMinesweeper.addActionListener(this);
-    placeMinesweeper.setActionCommand("placeMineSweeper");
+    placeMinesweeper.setActionCommand("placeMinesweeper");
 
-    /** Config Button: placeFrigate */
     placeFrigate.setText("Place frigate");
     placeFrigate.setVisible(true);
     placeFrigate.addActionListener(this);
     placeFrigate.setActionCommand("placeFrigate");
 
-    /** Config Button: placeAircraftCarrier */
     placeAircraftCarrier.setText("Place aircraft carrier");
     placeAircraftCarrier.setVisible(true);
     placeAircraftCarrier.addActionListener(this);
     placeAircraftCarrier.setActionCommand("placeAircraftCarrier");
 
-    /** Config Panel: northPanel */
-    northPanel.add(tf1);
+    northPanel.add(statusBar);
 
-    /** Config Panel: centerPanel */
     centerPanel.setLayout(new GridLayout(1, 1, 10, 10));
     centerPanel.add(own);
     centerPanel.add(opponent);
 
-    /** Config Panel: southPanel */
     southPanel.setLayout(new FlowLayout());
     southPanel.add(done);
     southPanel.add(placeMinesweeper);
@@ -108,7 +101,6 @@ public class GameUI extends JFrame implements ActionListener {
     setVisible(true);
     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-    /** Default: disable button in the southPanel **/
     enableDoneButton(false);
     enablePlaceMinesweeper(false);
     enablePlaceFrigate(false);
@@ -137,7 +129,7 @@ public class GameUI extends JFrame implements ActionListener {
   }
 
   public void setText(String text) {
-    tf1.setText(text);
+    statusBar.setText(text);
   }
 
   public void enableDoneButton(boolean value) {

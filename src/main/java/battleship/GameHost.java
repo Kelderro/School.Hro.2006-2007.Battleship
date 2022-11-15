@@ -23,52 +23,12 @@ public class GameHost extends Game {
 
   private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
-  public static void main(String[] args) {
-    new GameHost();
-  }
-
-  /** Creates a new instance of GameHost */
   public GameHost() {
     super();
 
     ui.setTitle("Server - BattleShip");
 
     waitForOpponent();
-
-    this.logger.debug("BattleShip for:\n" +
-        "\n\r      ___           ___           ___           ___           ___" +
-        "\n\r     /\\__\\         /\\  \\         /\\  \\         /\\  \\         /\\__\\" +
-        "\n\r    /:/ _/_       /::\\  \\       /::\\  \\        \\:\\  \\       /:/  /" +
-        "\n\r   /:/ /\\__\\     /:/\\:\\  \\     /:/\\ \\  \\        \\:\\  \\     /:/  / " +
-        "\n\r  /:/ /:/ _/_   /::\\~\\:\\  \\   _\\:\\~\\ \\  \\       /::\\  \\   /:/  /  " +
-        "\n\r /:/_/:/ /\\__\\ /:/\\:\\ \\:\\__\\ /\\ \\:\\ \\ \\__\\     /:/\\:\\__\\ /:/__/   " +
-        "\n\r \\:\\/:/ /:/  / \\:\\~\\:\\ \\/__/ \\:\\ \\:\\ \\/__/    /:/  \\/__/ \\:\\  \\   " +
-        "\n\r  \\::/_/:/  /   \\:\\ \\:\\__\\    \\:\\ \\:\\__\\     /:/  /       \\:\\  \\  " +
-        "\n\r   \\:\\/:/  /     \\:\\ \\/__/     \\:\\/:/  /     \\/__/         \\:\\  \\ " +
-        "\n\r    \\::/  /       \\:\\__\\        \\::/  /                     \\:\\__\\" +
-        "\n\r     \\/__/         \\/__/         \\/__/                       \\/__/" +
-        "\n\r      ___           ___           ___           ___           ___     " +
-        "\n\r     /\\  \\         /\\__\\         /\\  \\         /\\  \\         /\\  \\    " +
-        "\n\r    /::\\  \\       /::|  |       /::\\  \\       /::\\  \\       /::\\  \\   " +
-        "\n\r   /:/\\:\\  \\     /:|:|  |      /:/\\:\\  \\     /:/\\:\\  \\     /:/\\:\\  \\  " +
-        "\n\r  /::\\~\\:\\  \\   /:/|:|  |__   /:/  \\:\\__\\   /::\\~\\:\\  \\   /::\\~\\:\\  \\ " +
-        "\n\r /:/\\:\\ \\:\\__\\ /:/ |:| /\\__\\ /:/__/ \\:|__| /:/\\:\\ \\:\\__\\ /:/\\:\\ \\:\\__\\" +
-        "\n\r \\/__\\:\\/:/  / \\/__|:|/:/  / \\:\\  \\ /:/  / \\:\\~\\:\\ \\/__/ \\/_|::\\/:/  /" +
-        "\n\r      \\::/  /      |:/:/  /   \\:\\  /:/  /   \\:\\ \\:\\__\\      |:|::/  / " +
-        "\n\r      /:/  /       |::/  /     \\:\\/:/  /     \\:\\ \\/__/      |:|\\/__/  " +
-        "\n\r     /:/  /        /:/  /       \\::/__/       \\:\\__\\        |:|  |    " +
-        "\n\r     \\/__/         \\/__/         ~~            \\/__/         \\|__|    " +
-        "\n\r      ___     " +
-        "\n\r     /\\  \\    " +
-        "\n\r    /::\\  \\   " +
-        "\n\r   /:/\\ \\  \\  " +
-        "\n\r  _\\:\\~\\ \\  \\ " +
-        "\n\r /\\ \\:\\ \\ \\__\\" +
-        "\n\r \\:\\ \\:\\ \\/__/" +
-        "\n\r  \\:\\ \\:\\__\\  " +
-        "\n\r   \\:\\/:/  /  " +
-        "\n\r    \\::/  /   " +
-        "\n\r     \\/__/    ");
 
     ui.setText("Found an opponent");
 
@@ -81,7 +41,7 @@ public class GameHost extends Game {
   }
 
   public void waitForOpponent() {
-    int portNumber = 1337;
+
     try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
 
       /** Luister naar een connectie aanvraag */
@@ -96,7 +56,7 @@ public class GameHost extends Game {
 
     } catch (IOException ex) {
       this.logger.error(
-          "Exception occured while trying to open port " + portNumber, ex);
+          "Exception occured while trying to open port {}", portNumber, ex);
     }
   }
 
