@@ -51,49 +51,40 @@ public class GameUI extends JFrame implements ActionListener {
     own = new Board(game);
     opponent = new Board(game);
 
-    /** Define global variable: game */
     this.game = game;
 
-    /** Config TextField: TF1 */
     statusBar.setText(String.format("Waiting for an opponent. Port `%s` is made available for an incoming connection.",
         Game.portNumber));
 
     statusBar.setEditable(false);
     statusBar.setBackground(Color.WHITE);
 
-    /** Config Button: done */
     done.setText("Done");
     done.setVisible(true);
     done.addActionListener(this);
     done.setActionCommand("done");
 
-    /** Config Button: placeMineSweeper */
     placeMinesweeper.setText("Place mine sweeper");
     placeMinesweeper.setVisible(true);
     placeMinesweeper.addActionListener(this);
     placeMinesweeper.setActionCommand("placeMinesweeper");
 
-    /** Config Button: placeFrigate */
     placeFrigate.setText("Place frigate");
     placeFrigate.setVisible(true);
     placeFrigate.addActionListener(this);
     placeFrigate.setActionCommand("placeFrigate");
 
-    /** Config Button: placeAircraftCarrier */
     placeAircraftCarrier.setText("Place aircraft carrier");
     placeAircraftCarrier.setVisible(true);
     placeAircraftCarrier.addActionListener(this);
     placeAircraftCarrier.setActionCommand("placeAircraftCarrier");
 
-    /** Config Panel: northPanel */
     northPanel.add(statusBar);
 
-    /** Config Panel: centerPanel */
     centerPanel.setLayout(new GridLayout(1, 1, 10, 10));
     centerPanel.add(own);
     centerPanel.add(opponent);
 
-    /** Config Panel: southPanel */
     southPanel.setLayout(new FlowLayout());
     southPanel.add(done);
     southPanel.add(placeMinesweeper);
@@ -110,7 +101,6 @@ public class GameUI extends JFrame implements ActionListener {
     setVisible(true);
     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-    /** Default: disable button in the southPanel **/
     enableDoneButton(false);
     enablePlaceMinesweeper(false);
     enablePlaceFrigate(false);
