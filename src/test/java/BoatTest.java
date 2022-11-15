@@ -76,7 +76,21 @@ class BoatTest {
   }
 
   @Test
-  void Place_HorizontalBoat_Successful() {
+  void PlaceBoat_Diagonal_Failure() {
+    UnitTestBoat unitTestBoat = new UnitTestBoat(5, "UnitTest");
+    Square square = new Square(0, 0);
+    Boolean claim = unitTestBoat.claimSquare(square);
+
+    assertTrue(claim);
+
+    square = new Square(1, 1);
+    claim = unitTestBoat.claimSquare(square);
+
+    assertFalse(claim);
+  }
+
+  @Test
+  void HorizontalBoat_SkipBlock_ReturnFalse() {
     UnitTestBoat unitTestBoat = new UnitTestBoat(5, "UnitTest");
     Square square = new Square(1, 0);
 
@@ -103,15 +117,10 @@ class BoatTest {
     claim = unitTestBoat.claimSquare(square);
 
     assertFalse(claim);
-
-    square = new Square(4, 0);
-    claim = unitTestBoat.claimSquare(square);
-
-    assertTrue(claim);
   }
 
   @Test
-  void Place_VerticalBoat_Successful() {
+  void VerticalBoat_SkipBlock_ReturnFalse() {
     UnitTestBoat unitTestBoat = new UnitTestBoat(5, "UnitTest");
     Square square = new Square(0, 1);
 
@@ -138,11 +147,6 @@ class BoatTest {
     claim = unitTestBoat.claimSquare(square);
 
     assertFalse(claim);
-
-    square = new Square(0, 4);
-    claim = unitTestBoat.claimSquare(square);
-
-    assertTrue(claim);
   }
 
   private class UnitTestBoat extends Boat {
