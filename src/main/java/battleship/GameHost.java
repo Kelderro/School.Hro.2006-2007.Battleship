@@ -42,7 +42,7 @@ public class GameHost extends Game {
 
   public void waitForOpponent() {
 
-    try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
+    try (ServerSocket serverSocket = new ServerSocket(PortNumber)) {
 
       /** Luister naar een connectie aanvraag */
       socket = serverSocket.accept();
@@ -56,7 +56,7 @@ public class GameHost extends Game {
 
     } catch (IOException ex) {
       this.logger.error(
-          "Exception occured while trying to open port {}", portNumber, ex);
+          "Exception occured while trying to open port {}", PortNumber, ex);
     }
   }
 
