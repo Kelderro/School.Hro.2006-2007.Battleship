@@ -66,6 +66,10 @@ public class GameClient extends Game {
 
     } catch (IOException ex) {
       this.logger.error("Error occured", ex);
+
+      JOptionPane.showMessageDialog(ui,
+          String.format("Failed to setup a connection. Exception message: %s", ex.getMessage()), "Failed to connect",
+          JOptionPane.ERROR_MESSAGE);
     }
   }
 

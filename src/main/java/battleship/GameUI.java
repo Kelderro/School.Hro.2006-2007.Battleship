@@ -29,7 +29,7 @@ import javax.swing.JButton;
 public class GameUI extends JFrame implements ActionListener {
 
   private Game game;
-  private JTextField tf1;
+  private JTextField statusBar;
   private JButton done;
   private JButton placeMinesweeper;
   private JButton placeFrigate;
@@ -43,7 +43,7 @@ public class GameUI extends JFrame implements ActionListener {
     JPanel northPanel = new JPanel(new BorderLayout());
     JPanel centerPanel = new JPanel(new BorderLayout());
     JPanel southPanel = new JPanel();
-    tf1 = new JTextField();
+    statusBar = new JTextField();
     done = new JButton();
     placeMinesweeper = new JButton();
     placeFrigate = new JButton();
@@ -55,11 +55,11 @@ public class GameUI extends JFrame implements ActionListener {
     this.game = game;
 
     /** Config TextField: TF1 */
-    tf1.setText(String.format("Waiting for an opponent. Port `%s` is made available for an incoming connection.",
+    statusBar.setText(String.format("Waiting for an opponent. Port `%s` is made available for an incoming connection.",
         game.portNumber));
 
-    tf1.setEditable(false);
-    tf1.setBackground(Color.WHITE);
+    statusBar.setEditable(false);
+    statusBar.setBackground(Color.WHITE);
 
     /** Config Button: done */
     done.setText("Done");
@@ -71,7 +71,7 @@ public class GameUI extends JFrame implements ActionListener {
     placeMinesweeper.setText("Place mine sweeper");
     placeMinesweeper.setVisible(true);
     placeMinesweeper.addActionListener(this);
-    placeMinesweeper.setActionCommand("placeMineSweeper");
+    placeMinesweeper.setActionCommand("placeMinesweeper");
 
     /** Config Button: placeFrigate */
     placeFrigate.setText("Place frigate");
@@ -86,7 +86,7 @@ public class GameUI extends JFrame implements ActionListener {
     placeAircraftCarrier.setActionCommand("placeAircraftCarrier");
 
     /** Config Panel: northPanel */
-    northPanel.add(tf1);
+    northPanel.add(statusBar);
 
     /** Config Panel: centerPanel */
     centerPanel.setLayout(new GridLayout(1, 1, 10, 10));
@@ -139,7 +139,7 @@ public class GameUI extends JFrame implements ActionListener {
   }
 
   public void setText(String text) {
-    tf1.setText(text);
+    statusBar.setText(text);
   }
 
   public void enableDoneButton(boolean value) {

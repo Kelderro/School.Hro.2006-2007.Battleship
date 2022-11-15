@@ -35,6 +35,15 @@ public class Board extends JPanel implements ActionListener {
                 add(buttons[row][column]);
                 buttons[row][column].addActionListener(this);
                 buttons[row][column].setActionCommand(row + "," + column);
+                buttons[row][column].setEnabled(false);
+            }
+        }
+    }
+
+    public void enableBoard(Boolean enable) {
+        for (int row = 0; row < size; row++) {
+            for (int column = 0; column < size; column++) {
+                buttons[row][column].setEnabled(enable);
             }
         }
     }
