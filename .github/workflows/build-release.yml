@@ -1,5 +1,5 @@
 ---
-name: build-release
+name: Build release
 on:
   push:
     branches:
