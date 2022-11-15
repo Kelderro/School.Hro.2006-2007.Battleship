@@ -37,7 +37,7 @@ public class GameClient extends Game {
     try {
 
       String message = String.format("Connection via port number '%s'. Waiting for IP address of the server.",
-          portNumber);
+          PortNumber);
 
       ui.setText(message);
 
@@ -46,7 +46,7 @@ public class GameClient extends Game {
       String ipAddress = JOptionPane.showInputDialog(null, "Please, provide the IP address of the server", "IP address",
           JOptionPane.QUESTION_MESSAGE);
 
-      socket = new Socket(ipAddress, portNumber);
+      socket = new Socket(ipAddress, PortNumber);
 
       this.logger.info("Connection established with the server");
 
