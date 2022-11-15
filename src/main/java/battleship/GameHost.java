@@ -44,7 +44,7 @@ public class GameHost extends Game {
 
     try (ServerSocket serverSocket = new ServerSocket(PortNumber)) {
 
-      /** Luister naar een connectie aanvraag */
+      /** Listen for a connection request */
       socket = serverSocket.accept();
 
       /** Data input en output maken */
@@ -73,7 +73,11 @@ public class GameHost extends Game {
 
   public void doneButton() {
     ui.enableDoneButton(false);
-    this.logger.debug("done");
+
+    // Inform the client that the server is done with placing boats
+    out.println("done");
+    out.flush();
+
     this.audioManager.playStart();
     waitForTurn();
   }

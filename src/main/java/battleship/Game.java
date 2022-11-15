@@ -143,6 +143,9 @@ public abstract class Game implements ActionListener {
       yourTurn = false;
       this.logger.info("Attempt [{},{}] was ", row, column);
 
+      out.println(String.format("attempt,%d,%d", row, column));
+      out.flush();
+
       String strLine = "";
       try {
         while (strLine.equals("")) {
@@ -189,6 +192,10 @@ public abstract class Game implements ActionListener {
     playConditionAudio(condition);
 
     String strCondition = condition.toString();
+
+    // Inform the other player about the attempt
+    out.println(strCondition);
+    out.flush();
 
     this.logger.debug(strCondition);
 
