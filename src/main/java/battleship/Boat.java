@@ -113,9 +113,9 @@ public abstract class Boat {
           "Only a single piece has been selected for the boat. The player is free to go horizontal or vertical with the current boat.");
     } else {
       if (squares[0].row == squares[1].row) {
-        verticalBoat = false;
-      } else {
         horizontalBoat = false;
+      } else {
+        verticalBoat = false;
       }
 
       this.logger.info(
@@ -123,11 +123,11 @@ public abstract class Boat {
           horizontalBoat ? "horizontal" : "vertical", horizontalBoat ? "row" : "column");
     }
 
-    if (verticalBoat && Boolean.TRUE.equals(isLinked(square, p -> p.row))) {
+    if (verticalBoat && Boolean.TRUE.equals(isLinked(square, p -> p.column, p -> p.row))) {
       return true;
     }
 
-    return horizontalBoat && Boolean.TRUE.equals(isLinked(square, p -> p.column));
+    return horizontalBoat && Boolean.TRUE.equals(isLinked(square, p -> p.row, p -> p.column));
   }
 
   /**
@@ -138,10 +138,17 @@ public abstract class Boat {
    *                         boat.
    * @param relevantProperty Delegate to retrieve the column or the row value of
    *                         the square object that is going to be claimed.
+   * @param staticProperty   Other value
    * @return true, the square is correctly placed relative to the already placed
    *         squares for the boat. false, otherwise.
    */
-  private Boolean isLinked(Square square, ToIntFunction<Square> relevantProperty) {
+  private Boolean isLinked(Square square, ToIntFunction<Square> relevantProperty,
+      ToIntFunction<Square> staticProperty) {
+
+    if (staticProperty.applyAsInt(square) != staticProperty.applyAsInt(squares[0])) {
+      return false;
+    }
+
     // Sort the squares to be certain the first square of the boat is at position 0
     // of the array and the last square of the boat at the end of the array.
     // Depending on how the boat is placed we need to sort by column or by row
