@@ -56,7 +56,7 @@ public class GameUI extends JFrame implements ActionListener {
 
     /** Config TextField: TF1 */
     statusBar.setText(String.format("Waiting for an opponent. Port `%s` is made available for an incoming connection.",
-        game.portNumber));
+        Game.portNumber));
 
     statusBar.setEditable(false);
     statusBar.setBackground(Color.WHITE);
