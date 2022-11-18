@@ -8,12 +8,10 @@ package battleship;
 
 import java.util.Arrays;
 import java.util.function.ToIntFunction;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
  * @author 0777974
  */
 public abstract class Boat {
@@ -63,7 +61,10 @@ public abstract class Boat {
   }
 
   public boolean claimSquare(Square claimSquare) {
-    this.logger.info("{}:\n\tNumber of squares placed: {}\n\tTotal amount of squares:\t{}", boatName, currentSize,
+    this.logger.info(
+        "{}:\n\tNumber of squares placed: {}\n\tTotal amount of squares:\t{}",
+        boatName,
+        currentSize,
         squares.length);
 
     if (claimSquare.isClaimed()) {
@@ -82,25 +83,19 @@ public abstract class Boat {
   }
 
   /**
-   * A boat must consist out of linked squares. This
-   * function verifies if the square that is selected
-   * to be added to the boat is linked to any of
-   * the previously selected squares of the boat.
-   * 
+   * A boat must consist out of linked squares. This function verifies if the square that is
+   * selected to be added to the boat is linked to any of the previously selected squares of the
+   * boat.
+   *
    * @param square
-   * @return false, the square is not linked to a previous selected square for
-   *         this boat
-   *         true, the square is linked to a previous selected square for this
-   *         boat
+   * @return false, the square is not linked to a previous selected square for this boat true, the
+   *     square is linked to a previous selected square for this boat
    */
   protected boolean isPart(Square square) {
     /**
-     * This magnificent function has been coded by:
-     * (0777974) - Rob op den Kelder
-     * (0777556) - Stephan Klop
-     * Westland corp.
+     * This magnificent function has been coded by: (0777974) - Rob op den Kelder (0777556) -
+     * Stephan Klop Westland corp.
      */
-
     if (currentSize == 0) {
       return true;
     }
@@ -120,7 +115,8 @@ public abstract class Boat {
 
       this.logger.info(
           "The boat is positioned in a {} way.\nThe next piece for the boat must be on the same {} as the previous piece.",
-          horizontalBoat ? "horizontal" : "vertical", horizontalBoat ? "row" : "column");
+          horizontalBoat ? "horizontal" : "vertical",
+          horizontalBoat ? "row" : "column");
     }
 
     if (verticalBoat && Boolean.TRUE.equals(isLinked(square, p -> p.column, p -> p.row))) {
@@ -131,19 +127,18 @@ public abstract class Boat {
   }
 
   /**
-   * Verifies if the new square is at the start or the end of the boat and not
-   * some random block on the grid.
-   * 
-   * @param square           The square that the player want to claim for the
-   *                         boat.
-   * @param relevantProperty Delegate to retrieve the column or the row value of
-   *                         the square object that is going to be claimed.
-   * @param staticProperty   Other value
-   * @return true, the square is correctly placed relative to the already placed
-   *         squares for the boat. false, otherwise.
+   * Verifies if the new square is at the start or the end of the boat and not some random block on
+   * the grid.
+   *
+   * @param square The square that the player want to claim for the boat.
+   * @param relevantProperty Delegate to retrieve the column or the row value of the square object
+   *     that is going to be claimed.
+   * @param staticProperty Other value
+   * @return true, the square is correctly placed relative to the already placed squares for the
+   *     boat. false, otherwise.
    */
-  private Boolean isLinked(Square square, ToIntFunction<Square> relevantProperty,
-      ToIntFunction<Square> staticProperty) {
+  private Boolean isLinked(
+      Square square, ToIntFunction<Square> relevantProperty, ToIntFunction<Square> staticProperty) {
 
     if (staticProperty.applyAsInt(square) != staticProperty.applyAsInt(squares[0])) {
       return false;
@@ -153,16 +148,20 @@ public abstract class Boat {
     // of the array and the last square of the boat at the end of the array.
     // Depending on how the boat is placed we need to sort by column or by row
     // property.
-    Arrays.sort(squares, (obj1, obj2) -> {
-      if (obj1 == null) {
-        return obj2 == null ? 0 : 1;
-      } else if (obj2 == null) {
-        return -1;
-      }
-      return Integer.compare(relevantProperty.applyAsInt(obj1), relevantProperty.applyAsInt(obj2));
-    });
+    Arrays.sort(
+        squares,
+        (obj1, obj2) -> {
+          if (obj1 == null) {
+            return obj2 == null ? 0 : 1;
+          } else if (obj2 == null) {
+            return -1;
+          }
+          return Integer.compare(
+              relevantProperty.applyAsInt(obj1), relevantProperty.applyAsInt(obj2));
+        });
 
     return relevantProperty.applyAsInt(square) == relevantProperty.applyAsInt(squares[0]) - 1
-        || relevantProperty.applyAsInt(square) == relevantProperty.applyAsInt(squares[currentSize - 1]) + 1;
+        || relevantProperty.applyAsInt(square)
+            == relevantProperty.applyAsInt(squares[currentSize - 1]) + 1;
   }
 }

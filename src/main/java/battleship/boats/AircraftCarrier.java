@@ -9,7 +9,6 @@ package battleship.boats;
 import battleship.Boat;
 
 /**
- *
  * @author Rob
  */
 public class AircraftCarrier extends Boat {

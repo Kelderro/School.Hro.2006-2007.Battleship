@@ -9,7 +9,6 @@ package battleship.boats;
 import battleship.Boat;
 
 /**
- *
  * @author 0777974
  */
 public class Frigate extends Boat {

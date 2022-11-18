@@ -1,9 +1,9 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import org.junit.jupiter.api.Test;
 
 import battleship.Square;
 import battleship.boats.Minesweeper;
+import org.junit.jupiter.api.Test;
 
 class SquareTest {
   @Test

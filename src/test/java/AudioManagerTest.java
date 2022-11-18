@@ -1,12 +1,10 @@
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.*;
 
+import battleship.AudioManager;
 import javax.sound.sampled.AudioSystem;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import battleship.AudioManager;
 
 class AudioManagerTest {
   AudioManager audioManager;
