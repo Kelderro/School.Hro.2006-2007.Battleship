@@ -101,6 +101,19 @@
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <excludes>
+            <!-- Excluding coverage of these files as they
+                 have UI elements. Running them will cause
+                 a blocking test. -->
+            <exclude>**/AudioManager.class</exclude>
+            <exclude>**/Game.class</exclude>
+            <exclude>**/GameClient.class</exclude>
+            <exclude>**/GameHost.class</exclude>
+            <exclude>**/GameUI.class</exclude>
+            <exclude>**/Main.class</exclude>
+          </excludes>
+        </configuration>
       </plugin>
     </plugins>
   </build>
