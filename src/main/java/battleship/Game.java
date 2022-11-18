@@ -6,25 +6,21 @@
 
 package battleship;
 
+import battleship.boats.AircraftCarrier;
+import battleship.boats.Frigate;
+import battleship.boats.Minesweeper;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.Socket;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import battleship.boats.AircraftCarrier;
-import battleship.boats.Frigate;
-import battleship.boats.Minesweeper;
-
-import java.net.Socket;
-import javax.swing.JOptionPane;
-
 /**
- *
  * @author 0777974
  */
 public abstract class Game implements ActionListener {
@@ -38,7 +34,8 @@ public abstract class Game implements ActionListener {
   private int maxAmountOfFrigates = 2;
   private int amountOfAircraftCarriers = 0;
   private int maxAmountOfAircraftCarriers = 1;
-  private int maxAmountOfBoats = maxAmountOfMinesweepers + maxAmountOfFrigates + maxAmountOfAircraftCarriers;
+  private int maxAmountOfBoats =
+      maxAmountOfMinesweepers + maxAmountOfFrigates + maxAmountOfAircraftCarriers;
   private int amountOfBoats = 0;
   public static final int PORTNUMBER = 1337;
 
@@ -112,7 +109,7 @@ public abstract class Game implements ActionListener {
     square.setBoat(boat);
     ui.own.setBoatButton(square.row, square.column, Condition.PLACINGBOAT);
 
-    if (!boat.complete()) {
+    if (!boat.isComplete()) {
       return;
     }
 
@@ -121,8 +118,10 @@ public abstract class Game implements ActionListener {
     this.enableAvailableBoatButtons();
     this.ui.own.enableBoard(false);
 
-    this.logger.info("\tBoatNumber[{}] has been placed." +
-        "\n\tTotal amount of boats: {}", this.amountOfBoats, this.maxAmountOfBoats);
+    this.logger.info(
+        "\tBoatNumber[{}] has been placed." + "\n\tTotal amount of boats: {}",
+        this.amountOfBoats,
+        this.maxAmountOfBoats);
 
     if (this.maxAmountOfBoats != this.amountOfBoats) {
       return;
@@ -186,8 +185,10 @@ public abstract class Game implements ActionListener {
     }
     this.logger.info("Incoming attempt [{},{}] is ", arrStrLine[1], arrStrLine[2]);
 
-    Condition condition = checkAttempt(Integer.parseInt(arrStrLine[1]), Integer.parseInt(arrStrLine[2]));
-    ui.own.setBoatButton(Integer.parseInt(arrStrLine[1]), Integer.parseInt(arrStrLine[2]), condition);
+    Condition condition =
+        checkAttempt(Integer.parseInt(arrStrLine[1]), Integer.parseInt(arrStrLine[2]));
+    ui.own.setBoatButton(
+        Integer.parseInt(arrStrLine[1]), Integer.parseInt(arrStrLine[2]), condition);
 
     playConditionAudio(condition);
 
