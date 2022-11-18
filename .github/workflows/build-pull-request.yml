@@ -1,3 +1,4 @@
+---
 name: Build Pull request
 on:
   pull_request:
@@ -33,6 +34,9 @@ jobs:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
+      - uses: axel-op/googlejavaformat-action@v3
+        with:
+          args: "--skip-sorting-imports --replace"
       - name: Set build version in maven (pom.xml)
         run: mvn versions:set -DnewVersion=v0.0.${{ github.run_number }}.${{ github.run_attempt }}
       - name: Build and analyze
