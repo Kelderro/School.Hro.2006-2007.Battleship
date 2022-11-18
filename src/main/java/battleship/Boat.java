@@ -39,7 +39,7 @@ public abstract class Boat {
     this.boatName = boatName;
   }
 
-  public boolean complete() {
+  public boolean isComplete() {
     return (currentSize == maxSize);
   }
 

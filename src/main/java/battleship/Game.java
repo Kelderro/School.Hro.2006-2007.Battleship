@@ -109,7 +109,7 @@ public abstract class Game implements ActionListener {
     square.setBoat(boat);
     ui.own.setBoatButton(square.row, square.column, Condition.PLACINGBOAT);
 
-    if (!boat.complete()) {
+    if (!boat.isComplete()) {
       return;
     }
 

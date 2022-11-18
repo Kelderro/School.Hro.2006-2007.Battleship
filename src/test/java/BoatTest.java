@@ -158,6 +158,80 @@ class BoatTest {
     assertFalse(claim);
   }
 
+  @Test
+  void SunkBoat3_IsSunk_ReturnTrue() {
+    // Arrange
+    UnitTestBoat unitTestBoat = new UnitTestBoat(5, "UnitTest");
+
+    // Act
+    unitTestBoat.checkSunk();
+
+    // Assert
+    assertTrue(unitTestBoat.isSunk());
+  }
+
+  @Test
+  void FullyPlacedBoat_IsComplete_ReturnTrue() {
+    // Arrange
+    UnitTestBoat unitTestBoat = new UnitTestBoat(2, "UnitTest");
+    Square square1 = new Square(0, 1);
+    unitTestBoat.claimSquare(square1);
+
+    Square square2 = new Square(0, 2);
+    unitTestBoat.claimSquare(square2);
+
+    // Assert
+    assertTrue(unitTestBoat.isComplete());
+  }
+
+  @Test
+  void PartlyPlacedBoat_IsComplete_ReturnFalse() {
+    // Arrange
+    UnitTestBoat unitTestBoat = new UnitTestBoat(2, "UnitTest");
+    Square square1 = new Square(0, 1);
+    unitTestBoat.claimSquare(square1);
+
+    // Assert
+    assertFalse(unitTestBoat.isComplete());
+  }
+
+  @Test
+  void PartHitBoat_IsSunk_ReturnFalse() {
+    // Arrange
+    UnitTestBoat unitTestBoat = new UnitTestBoat(2, "UnitTest");
+    Square square1 = new Square(0, 1);
+    unitTestBoat.claimSquare(square1);
+
+    Square square2 = new Square(0, 2);
+    unitTestBoat.claimSquare(square2);
+
+    // Act
+    square1.setHit();
+    unitTestBoat.checkSunk();
+
+    // Assert
+    assertFalse(unitTestBoat.isSunk());
+  }
+
+  @Test
+  void FullyHitBoat_IsSunk_ReturnTrue() {
+    // Arrange
+    UnitTestBoat unitTestBoat = new UnitTestBoat(2, "UnitTest");
+    Square square1 = new Square(0, 1);
+    unitTestBoat.claimSquare(square1);
+
+    Square square2 = new Square(0, 2);
+    unitTestBoat.claimSquare(square2);
+
+    // Act
+    square1.setHit();
+    square2.setHit();
+    unitTestBoat.checkSunk();
+
+    // Assert
+    assertTrue(unitTestBoat.isSunk());
+  }
+
   private class UnitTestBoat extends Boat {
     public UnitTestBoat(int maxSquareCount, String boatName) {
       super(maxSquareCount, boatName);
