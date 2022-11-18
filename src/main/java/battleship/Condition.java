@@ -1,6 +1,6 @@
 package battleship;
 
-enum Condition {
+public enum Condition {
   PLACINGBOAT,
   SPLASH,
   HIT,
