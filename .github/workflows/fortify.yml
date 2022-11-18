@@ -21,10 +21,10 @@ name: Fortify on Demand Scan
 # TODO: Customize trigger events based on your DevSecOps processes and typical FoD SAST scan time
 on:
   workflow_dispatch:
-  push:
-    branches: ["main"]
-  schedule:
-    - cron: "29 7 * * 6"
+#  push:
+#    branches: ["main"]
+#  schedule:
+#    - cron: "29 7 * * 6"
 
 jobs:
   FoD-SAST-Scan:
