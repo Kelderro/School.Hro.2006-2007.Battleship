@@ -7,39 +7,38 @@
 package battleship;
 
 /**
- *
  * @author 0777974
  */
 public class Square {
 
-    protected int row;
-    protected int column;
-    private boolean hit;
+  protected int row;
+  protected int column;
+  private boolean hit;
 
-    private Boat boat;
+  private Boat boat;
 
-    public Square(int row, int column) {
-        this.row = row;
-        this.column = column;
-    }
+  public Square(int row, int column) {
+    this.row = row;
+    this.column = column;
+  }
 
-    public void setBoat(Boat boat) {
-        this.boat = boat;
-    }
+  public void setBoat(Boat boat) {
+    this.boat = boat;
+  }
 
-    public Boat getBoat() {
-        return boat;
-    }
+  public Boat getBoat() {
+    return boat;
+  }
 
-    public boolean isClaimed() {
-        return boat != null;
-    }
+  public boolean isClaimed() {
+    return boat != null;
+  }
 
-    public void setHit() {
-        hit = true;
-    }
+  public void setHit() {
+    hit = true;
+  }
 
-    public boolean getHit() {
-        return hit;
-    }
+  public boolean getHit() {
+    return hit;
+  }
 }

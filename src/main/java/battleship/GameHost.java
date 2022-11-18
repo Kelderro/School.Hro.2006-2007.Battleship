@@ -11,12 +11,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
  * @author 0777974
  */
 public class GameHost extends Game {
@@ -48,15 +46,12 @@ public class GameHost extends Game {
       socket = serverSocket.accept();
 
       /** Data input en output maken */
-      in = new BufferedReader(new InputStreamReader(
-          socket.getInputStream()));
+      in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-      out = new PrintWriter(
-          socket.getOutputStream(), true);
+      out = new PrintWriter(socket.getOutputStream(), true);
 
     } catch (IOException ex) {
-      this.logger.error(
-          "Exception occured while trying to open port {}", PORTNUMBER, ex);
+      this.logger.error("Exception occured while trying to open port {}", PORTNUMBER, ex);
     }
   }
 

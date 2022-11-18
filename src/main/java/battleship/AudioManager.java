@@ -2,13 +2,11 @@ package battleship;
 
 import java.io.File;
 import java.io.IOException;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,14 +71,16 @@ public class AudioManager {
     }
 
     if (!fileName.matches("^([A-Za-z])+\\.wav$")) {
-      this.logger.info("The provided filename does not meet the expected regular expression validation.");
+      this.logger.info(
+          "The provided filename does not meet the expected regular expression validation.");
       return false;
     }
 
     File file = new File(soundPath + fileName);
 
     if (!file.exists()) {
-      this.logger.info("Unable to find play audio file as file does not exist under path: '{}'.",
+      this.logger.info(
+          "Unable to find play audio file as file does not exist under path: '{}'.",
           file.getAbsolutePath());
       return false;
     }

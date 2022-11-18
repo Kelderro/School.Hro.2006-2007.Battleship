@@ -12,18 +12,15 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.JFrame;
-import javax.swing.JButton;
-
 /**
- *
  * @author 0777974
  */
 public class GameUI extends JFrame implements ActionListener {
@@ -53,8 +50,10 @@ public class GameUI extends JFrame implements ActionListener {
 
     this.game = game;
 
-    statusBar.setText(String.format("Waiting for an opponent. Port `%s` is made available for an incoming connection.",
-        Game.PORTNUMBER));
+    statusBar.setText(
+        String.format(
+            "Waiting for an opponent. Port `%s` is made available for an incoming connection.",
+            Game.PORTNUMBER));
 
     statusBar.setEditable(false);
     statusBar.setBackground(Color.WHITE);
@@ -91,7 +90,7 @@ public class GameUI extends JFrame implements ActionListener {
     southPanel.add(placeFrigate);
     southPanel.add(placeAircraftCarrier);
 
-    /** Config Window: **/
+    /** Config Window: * */
     getContentPane().add(northPanel, BorderLayout.NORTH);
     getContentPane().add(centerPanel, BorderLayout.CENTER);
     getContentPane().add(southPanel, BorderLayout.SOUTH);
@@ -122,7 +121,8 @@ public class GameUI extends JFrame implements ActionListener {
         game.createAircraftCarrier();
         break;
       default:
-        logger.debug("A not supported action has been performaned. The action command is '{}'",
+        logger.debug(
+            "A not supported action has been performaned. The action command is '{}'",
             e.getActionCommand());
         break;
     }
